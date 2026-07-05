@@ -1,0 +1,55 @@
+{
+  "customers": [
+    { "id": 1, "customer_name": "Esra Polat", "age": 18, "city": "Samsun", "district": "Atakum", "customer_type": "INDIVIDUAL", "segment": "YOUTH", "registration_date": "2018-04-18", "is_active": true },
+    { "id": 2, "customer_name": "Can Erdoğan", "age": 22, "city": "Bursa", "district": "Yıldırım", "customer_type": "INDIVIDUAL", "segment": "YOUTH", "registration_date": "2021-10-30", "is_active": true },
+    { "id": 3, "customer_name": "Mehmet Taş", "age": 22, "city": "İstanbul", "district": "Beşiktaş", "customer_type": "INDIVIDUAL", "segment": "YOUTH", "registration_date": "2022-08-19", "is_active": true },
+    { "id": 4, "customer_name": "Zeynep Sezer", "age": 48, "city": "Ankara", "district": "Yenimahalle", "customer_type": "INDIVIDUAL", "segment": "STANDARD", "registration_date": "2021-06-24", "is_active": true },
+    { "id": 5, "customer_name": "Tolga Sezer", "age": 29, "city": "Ankara", "district": "Mamak", "customer_type": "INDIVIDUAL", "segment": "STANDARD", "registration_date": "2018-08-06", "is_active": true },
+    { "id": 6, "customer_name": "Umut Çetin", "age": 48, "city": "Bursa", "district": "Osmangazi", "customer_type": "INDIVIDUAL", "segment": "STANDARD", "registration_date": "2018-03-11", "is_active": true },
+    { "id": 7, "customer_name": "Can Öztürk", "age": 50, "city": "Kocaeli", "district": "İzmit", "customer_type": "INDIVIDUAL", "segment": "STANDARD", "registration_date": "2021-01-01", "is_active": true },
+    { "id": 8, "customer_name": "Esra Çetin", "age": 62, "city": "Şanlıurfa", "district": "Haliliye", "customer_type": "INDIVIDUAL", "segment": "STANDARD", "registration_date": "2024-03-26", "is_active": true }
+  ],
+  "product_catalog": [
+    { "id": "SIM001", "product_name": "Physical SIM Card", "product_type": "SIM", "inventory_category": "PHYSICAL", "product_group": "MOBILE_CONNECT", "target_customer_type": "BOTH", "revenue_type": "ONE_TIME", "base_price": 150, "is_active": true },
+    { "id": "MODEM001", "product_name": "Fiber Modem", "product_type": "Modem", "inventory_category": "PHYSICAL", "product_group": "FIXED_INTERNET_E", "target_customer_type": "BOTH", "revenue_type": "ONE_TIME", "base_price": 1200, "is_active": true },
+    { "id": "ROUTER001", "product_name": "Wi-Fi Router", "product_type": "Router", "inventory_category": "PHYSICAL", "product_group": "FIXED_INTERNET_E", "target_customer_type": "BOTH", "revenue_type": "ONE_TIME", "base_price": 900, "is_active": true },
+    { "id": "ONT001", "product_name": "Fiber ONT Device", "product_type": "Fiber Device", "inventory_category": "PHYSICAL", "product_group": "FIXED_INTERNET_E", "target_customer_type": "BOTH", "revenue_type": "ONE_TIME", "base_price": 1100, "is_active": true },
+    { "id": "BOUSTER001", "product_name": "Wi-Fi Signal Booster", "product_type": "Wi-Fi Booster", "inventory_category": "PHYSICAL", "product_group": "FIXED_INTERNET_E", "target_customer_type": "BOTH", "revenue_type": "ONE_TIME", "base_price": 800, "is_active": true },
+    { "id": "MIFI001", "product_name": "Portable 4G/5G Mob", "product_type": "Mobile Wi-Fi Device", "inventory_category": "PHYSICAL", "product_group": "MOBILE_CONNECT", "target_customer_type": "BOTH", "revenue_type": "ONE_TIME", "base_price": 150, "is_active": true },
+    { "id": "IOTDEV001", "product_name": "IoT Tracking Device", "product_type": "IoT Device", "inventory_category": "PHYSICAL", "product_group": "IOT_M2M", "target_customer_type": "CORPORATE", "revenue_type": "ONE_TIME", "base_price": 2000, "is_active": true },
+    { "id": "POSDEV001", "product_name": "POS Connection De", "product_type": "POS Device", "inventory_category": "PHYSICAL", "product_group": "ENTERPRISE_CONN", "target_customer_type": "CORPORATE", "revenue_type": "ONE_TIME", "base_price": 1800, "is_active": true }
+  ],
+  "sales_channels": [
+    { "id": 1, "channel_name": "İstanbul Kadıköy Reta", "channel_type": "RETAIL_STORE", "city": "İstanbul", "district": "Kadıköy", "region": "Marmara", "is_active": true },
+    { "id": 2, "channel_name": "İstanbul Beşiktaş Reta", "channel_type": "RETAIL_STORE", "city": "İstanbul", "district": "Beşiktaş", "region": "Marmara", "is_active": true },
+    { "id": 3, "channel_name": "İstanbul Şişli Retail S", "channel_type": "RETAIL_STORE", "city": "İstanbul", "district": "Şişli", "region": "Marmara", "is_active": true },
+    { "id": 4, "channel_name": "İstanbul Bakırköy Ret", "channel_type": "RETAIL_STORE", "city": "İstanbul", "district": "Bakırköy", "region": "Marmara", "is_active": true },
+    { "id": 5, "channel_name": "İstanbul Ümraniye Re", "channel_type": "RETAIL_STORE", "city": "İstanbul", "district": "Ümranıye", "region": "Marmara", "is_active": true },
+    { "id": 6, "channel_name": "Ankara Çankaya Reta", "channel_type": "RETAIL_STORE", "city": "Ankara", "district": "Çankaya", "region": "İç Anadolu", "is_active": true },
+    { "id": 20, "channel_name": "Örnek Kanal 20", "channel_type": "RETAIL_STORE", "city": "Test", "district": "Test", "region": "Test", "is_active": true },
+    { "id": 21, "channel_name": "Örnek Kanal 21", "channel_type": "RETAIL_STORE", "city": "Test", "district": "Test", "region": "Test", "is_active": true },
+    { "id": 22, "channel_name": "Örnek Kanal 22", "channel_type": "RETAIL_STORE", "city": "Test", "district": "Test", "region": "Test", "is_active": true },
+    { "id": 23, "channel_name": "Örnek Kanal 23", "channel_type": "RETAIL_STORE", "city": "Test", "district": "Test", "region": "Test", "is_active": true },
+    { "id": 26, "channel_name": "Örnek Kanal 26", "channel_type": "RETAIL_STORE", "city": "Test", "district": "Test", "region": "Test", "is_active": true },
+    { "id": 27, "channel_name": "Örnek Kanal 27", "channel_type": "RETAIL_STORE", "city": "Test", "district": "Test", "region": "Test", "is_active": true }
+  ],
+  "inventory_stock": [
+    { "id": 1, "product_code": "SIM001", "sales_channel_id": 26, "current_stock": 41, "minimum_stock_level": 18, "maximum_stock_level": 72, "last_restock_date": "2025-11-25" },
+    { "id": 2, "product_code": "MODEM001", "sales_channel_id": 12, "current_stock": 24, "minimum_stock_level": 23, "maximum_stock_level": 110, "last_restock_date": "2025-02-15" },
+    { "id": 3, "product_code": "ROUTER001", "sales_channel_id": 23, "current_stock": 34, "minimum_stock_level": 19, "maximum_stock_level": 50, "last_restock_date": "2025-09-02" },
+    { "id": 4, "product_code": "ONT001", "sales_channel_id": 13, "current_stock": 97, "minimum_stock_level": 13, "maximum_stock_level": 151, "last_restock_date": "2025-01-22" },
+    { "id": 5, "product_code": "BOOSTER001", "sales_channel_id": 9, "current_stock": 43, "minimum_stock_level": 24, "maximum_stock_level": 141, "last_restock_date": "2025-11-25" },
+    { "id": 6, "product_code": "MIFI001", "sales_channel_id": 18, "current_stock": 178, "minimum_stock_level": 34, "maximum_stock_level": 180, "last_restock_date": "2025-10-26" },
+    { "id": 7, "product_code": "IOTDEV001", "sales_channel_id": 27, "current_stock": 11, "minimum_stock_level": 25, "maximum_stock_level": 113, "last_restock_date": "2025-12-12" },
+    { "id": 8, "product_code": "POSDEV001", "sales_channel_id": 23, "current_stock": 25, "minimum_stock_level": 13, "maximum_stock_level": 79, "last_restock_date": "2025-04-27" }
+  ],
+  "inventory_assignment": [
+    { "id": 1, "customer_id": 1, "product_code": "DATA030", "sales_channel_id": 22, "order_date": "2025-10-23", "price": 450, "quantity": 1, "status": "ACTIVE" },
+    { "id": 2, "customer_id": 2, "product_code": "MIFI001", "sales_channel_id": 3, "order_date": "2023-11-13", "price": 800, "quantity": 1, "status": "ACTIVE" },
+    { "id": 3, "customer_id": 3, "product_code": "MIFI001", "sales_channel_id": 23, "order_date": "2022-10-25", "price": 450, "quantity": 1, "status": "ACTIVE" },
+    { "id": 4, "customer_id": 3, "product_code": "DATA020", "sales_channel_id": 4, "order_date": "2023-08-18", "price": 200, "quantity": 1, "status": "ACTIVE" },
+    { "id": 5, "customer_id": 3, "product_code": "ESIM001", "sales_channel_id": 2, "order_date": "2025-03-18", "price": 240, "quantity": 1, "status": "ACTIVE" },
+    { "id": 6, "customer_id": 4, "product_code": "DATA020", "sales_channel_id": 20, "order_date": "2025-03-15", "price": 340, "quantity": 1, "status": "ACTIVE" },
+    { "id": 7, "customer_id": 4, "product_code": "DATA030", "sales_channel_id": 21, "order_date": "2022-05-24", "price": 140, "quantity": 1, "status": "ACTIVE" }
+  ]
+}
