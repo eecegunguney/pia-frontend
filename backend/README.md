@@ -2,7 +2,7 @@
 
 ## 📌 Milestone Overview
 
-On the first day of development, the primary objective was to establish a secure, portable, and production-ready infrastructure. Following enterprise software architecture principles, we implemented a **Monorepo structure** to ensure seamless collaboration between backend, frontend, test, and DevOps layers.
+On the first day of development, the primary objective was to establish a secure, portable, and production-ready infrastructure. Following enterprise software architecture principles, we implemented a containerized, environment-driven approach to eliminate configuration drift and security vulnerabilities.
 
 ---
 
@@ -22,8 +22,6 @@ On the first day of development, the primary objective was to establish a secure
 ## 📸 Initializing the Architecture
 
 The base project skeleton was scaffolded using **Spring Initializr** with enterprise metadata alignments (`com.pia.inventory`).
-
-![Enterprise Spring Boot project metadata and dependencies mapping](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-1-metadata)
 
 **Figure 1:** Enterprise Spring Boot project metadata and dependencies mapping
 
@@ -90,8 +88,6 @@ The base project skeleton was scaffolded using **Spring Initializr** with enterp
 
 The initialization of the relational storage layer was triggered through the container runtime platform.
 
-![Container image layer retrieval and network virtualization logs](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-2-deployment)
-
 **Figure 2:** Container image layer retrieval and network virtualization logs
 
 ---
@@ -126,8 +122,6 @@ docker compose --env-file ../.env up -d
 ## 🎛️ DBeaver Administrative Alignment
 
 Following successful container virtualization, a continuous database channel was provisioned within DBeaver.
-
-![Data Source parameters mapping host fields to isolated environmental limits](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-3-dbeaver)
 
 **Figure 3:** Data Source parameters mapping host fields to isolated environmental limits
 
@@ -171,11 +165,9 @@ Opening the unified workspace from the topmost root directory caused initializat
 
 ## 🟢 Verification Matrix & State of Completion
 
-![Secure handshakes, dynamic property rendering, and verified storage communications](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-4-verification)
-
 **Figure 4:** Secure handshakes, dynamic property rendering, and verified storage communications
 
-The dynamic integration layer successfully linked the Spring Boot runtime environment with the PostgreSQL engine **without copying `.env` files into sub-modules`.
+The dynamic integration layer successfully linked the Spring Boot runtime environment with the PostgreSQL engine **without copying `.env` files into sub-modules**.
 
 ---
 
