@@ -1,4 +1,13 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "1234",
+      "fullName": "Test Kullanıcısı",
+      "role": "ADMIN"
+    }
+  ],
   "customers": [
     { "id": 1, "customer_name": "Esra Polat", "age": 18, "city": "Samsun", "district": "Atakum", "customer_type": "INDIVIDUAL", "segment": "YOUTH", "registration_date": "2018-04-18", "is_active": true },
     { "id": 2, "customer_name": "Can Erdoğan", "age": 22, "city": "Bursa", "district": "Yıldırım", "customer_type": "INDIVIDUAL", "segment": "YOUTH", "registration_date": "2021-10-30", "is_active": true },
