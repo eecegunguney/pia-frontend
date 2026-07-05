@@ -23,4 +23,14 @@
 hs_err_pid*
 replay_pid*
 
+.idea/
+*.iml
+*.iws
+out/
+
 .env
+.env.*
+!.env.example
+
+/backend/target/
+/backend/build/
