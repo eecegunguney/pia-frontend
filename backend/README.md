@@ -1,195 +1,285 @@
-# 🚀 Day 1: Production-Ready Infrastructure & Database Connection
+# 🚀 Day 1: Project Infrastructure Setup & Database Integration
 
-## 📌 Milestone Overview
+## 📌 Day 1 Objective
 
-On the first day of development, the primary objective was to establish a secure, portable, and production-ready infrastructure. Following enterprise software architecture principles, we implemented a **Monorepo structure** to ensure seamless collaboration between backend, frontend, test, and DevOps layers.
+The primary objective of the first day was to establish a secure, portable, and team-friendly development environment.
 
----
+During this phase:
 
-## 🛠️ Tech Stack & Workspace Setup
-
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| **Language Runtime** | Java | 25 (Latest) |
-| **Framework** | Spring Boot | 3.5.16 (Stable LTS) |
-| **IDE** | IntelliJ IDEA | Latest |
-| **Database Engine** | PostgreSQL | 16-alpine (Containerized) |
-| **DB Administration** | DBeaver | Universal |
-| **Version Control** | Git & GitHub | Private Monorepo |
+- ✅ Project infrastructure was established
+- ✅ Backend project was initialized
+- ✅ Database environment was virtualized with Docker
+- ✅ Secure configuration system was implemented
+- ✅ Backend-PostgreSQL connection was successfully verified
 
 ---
 
-## 📸 Initializing the Architecture
+## 🛠️ Development Environment Setup
 
-The base project skeleton was scaffolded using **Spring Initializr** with enterprise metadata alignments (`com.pia.inventory`).
+### Installed Technologies
 
-![Enterprise Spring Boot project metadata and dependencies mapping](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-1-metadata)
-
-**Figure 1:** Enterprise Spring Boot project metadata and dependencies mapping
-
----
-
-## 🏛️ Architectural Decisions & Implementation Matrix
-
-### 🔐 Centralized Secret Management (.env)
-
-**Action:**
-- Extracted all database credentials, master keys, and port definitions from the source code into a root-level `.env` file
-
-**Justification:**
-- Hardcoding passwords inside source files is a critical vulnerability
-- This decouples our runtime configuration from the application logic
+| Technology | Version |
+|-----------|---------|
+| Java | 25 |
+| Spring Boot | 3.5.x |
+| PostgreSQL | 16-alpine |
+| Docker | Latest |
+| IntelliJ IDEA | Latest |
+| DBeaver | Latest |
+| Git & GitHub | Latest |
 
 ---
 
-### 🚫 Repository Leak Prevention (.gitignore)
+## 📦 GitHub Repository Creation
 
-**Action:**
-- Explicitly blacklisted the `.env` file from Git tracking patterns
+Initially, a private GitHub repository was created for the project, and the basic project folder structure was prepared.
 
-**Justification:**
-- Permanently prevents accidental credential leakages to remote version control platforms
-
----
-
-### 📦 Infrastructure Virtualization (Docker Compose)
-
-**Action:**
-- Containerized the PostgreSQL engine utilizing a lightweight and highly secure Alpine Linux distribution
-
-**Justification:**
-- Eliminates manual database installations on host machines
-- Guarantees a unified environment across the entire engineering team
-
----
-
-### 🔌 Dynamic Data Bridging (application.properties)
-
-**Action:**
-- Wired Spring Boot to dynamically map environment variables at runtime
-- Enabled the update schema strategy
-
-**Justification:**
-- Automates Object-Relational Mapping (ORM) generation directly from Java Entities
-- Safeguards raw connection strings
-
----
-
-### 📊 Visual Data Verification (DBeaver)
-
-**Action:**
-- Initiated a structural connection tunnel between the host machine and the running Docker container
-
-**Justification:**
-- Guarantees data integrity
-- Allows real-time execution profiling of SQL analytics queries
-
----
-
-## 🐳 Containerized Database Deployment
-
-The initialization of the relational storage layer was triggered through the container runtime platform.
-
-![Container image layer retrieval and network virtualization logs](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-2-deployment)
-
-**Figure 2:** Container image layer retrieval and network virtualization logs
-
----
-
-## ⚠️ Infrastructure Challenge & Resolution
-
-### The Problem
-
-During execution inside the sub-directory (`docker/`), the engine failed initialization due to missing credentials:
+### Created Structure
 
 ```
-Database is uninitialized and superuser password is not specified.
+telecom-customer-inventory-analytics-system/
+├── backend/
+├── frontend/
+├── docker/
+├── .env
+├── .gitignore
+└── README.md
+```
+
+This structure enables managing:
+- Backend
+- Frontend
+- Docker
+- Shared configurations
+
+All under a single repository.
+
+---
+
+## ☕ Spring Boot Project Creation
+
+The backend project was created using Spring Initializr.
+
+### Configuration Details
+
+| Property | Value |
+|----------|-------|
+| Group | com.pia.inventory |
+| Language | Java |
+| Build Tool | Maven |
+| Java Version | 25 |
+
+---
+
+## 🔐 Centralized Secret Management (.env)
+
+### What We Did
+
+Database username, password, and port information were extracted from source code and consolidated in a central `.env` file.
+
+**Example:**
+```env
+POSTGRES_DB=inventory
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=secure_password
+POSTGRES_PORT=5432
+```
+
+### Why We Did It
+
+- ✅ Prevented credentials from being stored in source code
+- ✅ Eliminated security vulnerabilities
+- ✅ Enabled Backend and Docker to use the same configuration
+- ✅ Aligned with enterprise development standards
+
+---
+
+## 🚫 Repository Security (.gitignore)
+
+### What We Did
+
+The `.env` file was configured to be excluded from Git tracking:
+
+```
+.env
+```
+
+### Why We Did It
+
+- ✅ Prevented accidental uploading of credentials to GitHub
+- ✅ Protected sensitive information from repository leakage
+
+---
+
+## 🐳 Docker PostgreSQL Setup
+
+### What We Did
+
+PostgreSQL 16 database was initialized using Docker Compose.
+
+**Utilized Version:**
+```
+postgres:16-alpine
+```
+
+### Why We Did It
+
+Using Docker enabled us to:
+- ✅ Ensure all team members use the same database environment
+- ✅ Eliminate manual installation requirements
+- ✅ Prevent version incompatibilities
+- ✅ Create a portable infrastructure running with a single command
+
+### Docker Container Initialization
+
+The following command was executed via IntelliJ terminal:
+
+```powershell
+docker compose up -d
+```
+
+---
+
+## ⚠️ Encountered Error & Resolution
+
+### Error Message
+
+```
+Database is uninitialized and superuser password is not specified
 ```
 
 ### Root Cause
 
-The container configuration could not automatically map the environment variables since the `.env` file was positioned one level higher in the root directory hierarchy.
+The `docker-compose.yml` file was located in the `docker/` directory, while the `.env` file was in the `project-root/` directory. Docker couldn't automatically read the `.env` file due to this directory mismatch.
 
-### Solution
+### Applied Solution
 
-Executed an explicit context bridging command via PowerShell to dynamically feed the exact deployment paths:
+The location of the `.env` file was explicitly specified to Docker:
 
 ```powershell
-# Bypassing directory bounds by forcing explicit environment mapping
 docker compose --env-file ../.env up -d
 ```
 
-⚠️ **Kodu dikkatli kullanın!** (Use this code carefully!)
+After this operation, the PostgreSQL container started successfully.
 
 ---
 
-## 🎛️ DBeaver Administrative Alignment
+## ⚙️ Spring Boot & PostgreSQL Connection
 
-Following successful container virtualization, a continuous database channel was provisioned within DBeaver.
+### What We Did
 
-![Data Source parameters mapping host fields to isolated environmental limits](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-3-dbeaver)
+The `application.properties` file was configured to read `.env` variables:
 
-**Figure 3:** Data Source parameters mapping host fields to isolated environmental limits
+```properties
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
 
----
+spring.jpa.hibernate.ddl-auto=update
+```
 
-## 📘 Monorepo Workspace Integration & IDE Synchronization
+### Why We Did It
 
-### 🧩 Architectural Friction
-
-Opening the unified workspace from the topmost root directory caused initialization issues in IntelliJ IDEA:
-
-**Issues Encountered:**
-- **Module Exclusion:** The compilation Run/Debug buttons turned gray (inactive) as the IDE did not automatically detect the standalone nested Java application
-- **Environment Isolation:** Attempting to run the isolated backend subfolder caused a crash:
-  ```
-  Driver claims to not accept jdbcUrl because Java lost track of the root .env variables.
-  ```
-
-### 🛠️ Permanent Enterprise Resolution Steps
-
-1. **Root Target Expansion**
-   - Opened the complete Monorepo bundle (`telecom-customer-inventory-analytics-system`) as the main working catalog
-
-2. **Maven Module Attachment**
-   - Right-clicked `backend/pom.xml`
-   - Executed "Add as Maven Project"
-   - Forced IntelliJ to map the nested dependencies into active runtime contexts
-
-3. **Compiler Standardization**
-   - Set the global Java Compiler level strictly to version 25
-
-4. **Working Directory Synchronization**
-   - Modified the Spring Boot Run Configuration settings
-   - Changed the default execution pathway to target the global root directory
-
-5. **EnvFile Dynamic Binding**
-   - Activated the EnvFile plugin tab in the execution profile
-   - Established a direct bridge to the root `.env` layout
+This configuration ensured:
+- ✅ Passwords were not stored in source code
+- ✅ Entity classes were automatically converted to database tables
+- ✅ Database tables were created automatically
+- ✅ Dynamic environment-based configuration was achieved
 
 ---
 
-## 🟢 Verification Matrix & State of Completion
+## 📊 Database Verification with DBeaver
 
-![Secure handshakes, dynamic property rendering, and verified storage communications](https://github.com/nalba/telecom-customer-inventory-analytics-system/assets/section/figure-4-verification)
+### What We Did
 
-**Figure 4:** Secure handshakes, dynamic property rendering, and verified storage communications
+A connection to the PostgreSQL database running on Docker was established using DBeaver.
 
-The dynamic integration layer successfully linked the Spring Boot runtime environment with the PostgreSQL engine **without copying `.env` files into sub-modules`.
+**Connection Details Provided:**
+- Host
+- Port
+- Database
+- Username
+- Password
 
----
-
-## 🎯 Key Outcomes Achieved
-
-✅ **Zero hardcoded configuration strings** in public code repositories  
-✅ **Unified workspace operational bounds** established for Backend and Frontend pipelines  
-✅ **Database Communication Verified:**
-   - Automatic schema generation verified
-   - Structural metadata successfully verified
-   - System is fully initialized for Day 2 domain development
+The connection test was successfully completed.
 
 ---
 
-## 📌 Next Steps
+## 📘 IntelliJ Configuration in Monorepo Structure
 
-The foundation is now ready for **Day 2: Domain Model Development & API Implementation**
+### Encountered Problem
+
+When opening the project from the outermost folder:
+- ❌ Run buttons remained inactive
+- ❌ IntelliJ couldn't automatically detect the backend module
+
+When opening only the backend folder:
+- ❌ `Driver claims to not accept jdbcUrl` error occurred
+
+### Root Cause
+
+When the backend folder was opened independently, the Java application couldn't access the `.env` file in the root directory.
+
+### Permanent Solution
+
+**Step 1: Open from Root Directory**
+```
+telecom-customer-inventory-analytics-system
+```
+
+**Step 2: Introduce Maven Module**
+```
+backend/pom.xml
+↓
+Right Click
+↓
+Add as Maven Project
+```
+
+**Step 3: Fix Java Version**
+```
+Project SDK = Java 25
+Compiler Level = Java 25
+```
+
+**Step 4: Configure Working Directory**
+
+In the Spring Boot Run Configuration:
+- Set **Working Directory** to the root project folder
+
+**Step 5: Link EnvFile**
+
+Using IntelliJ's EnvFile plugin:
+- Connect `root/.env` file to the Spring Boot application
+
+---
+
+## ✅ Results Achieved
+
+Successfully:
+
+- ✅ Java 25 development environment was established
+- ✅ Spring Boot project was created
+- ✅ Monorepo architecture was implemented
+- ✅ PostgreSQL was initialized on Docker
+- ✅ Central `.env`-based configuration was created
+- ✅ DBeaver connection was verified
+- ✅ Spring Boot-PostgreSQL connection was successfully established
+- ✅ Test data was written to the database
+- ✅ Application-database communication was verified
+
+---
+
+## 🎯 Day 1 Deliverables
+
+✅ Secure configuration system established  
+✅ Docker-based database infrastructure completed  
+✅ Monorepo architecture functional  
+✅ Backend ↔ PostgreSQL connection verified  
+✅ Project prepared for Domain Development (Day 2)  
+
+---
+
+## 🚀 Next Phase
+
+**Day 2: Domain Model Design & API Development**
