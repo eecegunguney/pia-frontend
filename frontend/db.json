@@ -4,8 +4,22 @@
       "id": 1,
       "username": "admin",
       "password": "1234",
-      "fullName": "Test Kullanıcısı",
+      "fullName": "Admin Test User",
       "role": "ADMIN"
+    },
+        {
+      "id": 2,
+      "username": "marketing",
+      "password": "1234",
+      "fullName": "Marketing Test User",
+      "role": "MARKETING"
+    },
+        {
+      "id": 3,
+      "username": "vendor",
+      "password": "1234",
+      "fullName": "Vendor Test User",
+      "role": "VENDOR"
     }
   ],
   "customers": [
