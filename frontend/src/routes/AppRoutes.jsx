@@ -26,7 +26,7 @@ export default function AppRoutes() {
       />
 
       <Route
-        path="/customers"
+        path="/customer"
         element={
           <ProtectedRoute>
             <CustomerListPage />
@@ -35,7 +35,7 @@ export default function AppRoutes() {
       />
 
       <Route
-        path="/customers/:id"
+        path="/customer/:id"
         element={
           <ProtectedRoute>
             <CustomerDetailPage />
