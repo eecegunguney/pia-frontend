@@ -10,11 +10,6 @@ import useAuth from "../../hooks/useAuth";
  * @returns {JSX.Element}
  */
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
   return children;
+
 }
