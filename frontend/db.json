@@ -288,6 +288,7 @@
       "last_name": "Arslan",
       "email": "gokhan.arslan@company.com",
       "username": "gokhan_admin",
+      "password": "1234",
       "password_hash": "$2b$12$eImiTxWIp5T87WG/KjKvwO23K9b...",
       "role": "Administrator"
     },

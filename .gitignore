@@ -1,36 +1,19 @@
-# Compiled class file
-*.class
+# Bağımlılıklar (Axios ve diğer tüm kurulu paketler bunun içindedir)
+node_modules/
 
-# Log file
-*.log
+# Üretim (Build) çıktıları
+dist/
+build/
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
-
-.idea/
-*.iml
-*.iws
-out/
-
+# Yerel ortam değişkenleri (Gizli şifreler/API anahtarları)
 .env
-.env.*
-!.env.example
+.env.local
 
-/backend/target/
-/backend/build/
+# Editör özel dosyaları
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

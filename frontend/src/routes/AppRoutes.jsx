@@ -8,6 +8,8 @@ import CustomerListPage from "../pages/customers/CustomerListPage";
 import CustomerDetailPage from "../pages/customers/CustomerDetailPage";
 import InventoryListPage from "../pages/inventory/InventoryListPage";
 import ProductListPage from "../pages/products/ProductListPage";
+import Layout from "../components/common/Layout";
+import StockListPage from "../pages/stocks/StockListPage";
 
 export default function AppRoutes() {
   return (
@@ -20,7 +22,9 @@ export default function AppRoutes() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <Layout>
+                <DashboardPage />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -29,7 +33,9 @@ export default function AppRoutes() {
         path="/customer"
         element={
           <ProtectedRoute>
-            <CustomerListPage />
+            <Layout>
+                <CustomerListPage />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -38,7 +44,9 @@ export default function AppRoutes() {
         path="/customer/:id"
         element={
           <ProtectedRoute>
-            <CustomerDetailPage />
+            <Layout>
+              <CustomerDetailPage />
+            </Layout>       
           </ProtectedRoute>
         }
       />
@@ -47,7 +55,9 @@ export default function AppRoutes() {
         path="/inventory"
         element={
           <ProtectedRoute>
-            <InventoryListPage />
+            <Layout>
+              <InventoryListPage />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -56,11 +66,23 @@ export default function AppRoutes() {
         path="/products"
         element={
           <ProtectedRoute>
-            <ProductListPage />
+            <Layout>
+                <ProductListPage />
+            </Layout>
           </ProtectedRoute>
         }
       />
-
+    
+      <Route
+        path="/stocks"
+        element={
+          <ProtectedRoute>
+            <Layout>
+                <StockListPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

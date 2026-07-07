@@ -8,29 +8,41 @@ export const AuthContext = createContext();
 
 /**
  * @component AuthProvider
- * @description A context provider that manages authentication state and provides login and logout functions to its children.
- * @param {Object} props - The properties passed to the AuthProvider component.
- * @param {React.ReactNode} props.children - The child components that will have access to the authentication context. 
+ * @description Manages authentication state and provides login/logout functions.
+ * @param {Object} props
+ * @param {React.ReactNode} props.children
  */
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   /**
-   * The user logs in and updates their status.
-   * @param {Object} userData - User data.
+   * Logs in the user and stores the session.
+   *
+   * @param {Object} userData - Authenticated user information.
    * @returns {void}
    */
   const login = (userData) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+
     setUser(userData);
   };
 
   /**
-   * The user logs out and clears their session.
-   * * TODO: Implement logic to clear token and user data from localStorage.
+   * Logs out the current user and clears the session.
+   *
+   * TODO:
+   * Remove JWT token when backend authentication is implemented.
+   *
    * @returns {void}
    */
-
   const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
     setUser(null);
   };
 
