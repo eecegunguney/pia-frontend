@@ -237,7 +237,7 @@ function Gauge({ label, pct }) {
         minWidth: 140,
       }}
     >
-      <svg width={size} height={size * 0.62} viewBox={`0 0 ${size} ${cy + 10}`}>
+      <svg width={size} height={size * 0.72} viewBox={`0 0 ${size} ${cy + 24}`}>
         <path
           d={describeArc(0, 100)}
           fill="none"
@@ -264,7 +264,7 @@ function Gauge({ label, pct }) {
         <circle cx={cx} cy={cy} r={5} fill={tokens.textPrimary} />
         <text
           x={12}
-          y={cy + 2}
+          y={cy + 18}
           fill={tokens.textSecondary}
           fontSize="11"
           fontWeight="600"
@@ -273,7 +273,7 @@ function Gauge({ label, pct }) {
         </text>
         <text
           x={size - 30}
-          y={cy + 2}
+          y={cy + 18}
           fill={tokens.textSecondary}
           fontSize="11"
           fontWeight="600"
@@ -309,7 +309,7 @@ function Gauge({ label, pct }) {
 function WarehouseOccupancyCard() {
   return (
     <Card style={{ flex: 1 }}>
-      <CardTitle>Warehouse occupancy</CardTitle>
+      <CardTitle>Sales</CardTitle>
       <div
         style={{
           display: "flex",
@@ -392,7 +392,7 @@ function tdStyle(align) {
 function RevenueExpenseCard() {
   return (
     <Card style={{ flex: 1 }}>
-      <CardTitle>Revenue &amp; expense</CardTitle>
+      <CardTitle>İncome &amp; expense</CardTitle>
       <div
         style={{
           display: "flex",
@@ -406,7 +406,7 @@ function RevenueExpenseCard() {
             {formatMoney(revenue)}
           </div>
           <div style={{ fontSize: 15, color: tokens.textSecondary, marginTop: 6, fontWeight: 500 }}>
-            Total revenue
+            Total income
           </div>
         </div>
         <div>
@@ -427,7 +427,7 @@ function RevenueExpenseCard() {
               marginBottom: 10,
             }}
           >
-            Expense as % of revenue
+            Expense as % of income
           </div>
           <div
             style={{
@@ -472,7 +472,7 @@ function RevenueExpenseCard() {
             marginBottom: 8,
           }}
         >
-          Revenue vs. expense by month
+          Income vs. expense by month
         </div>
         <div style={{ width: "100%", height: 140 }}>
           <ResponsiveContainer>
@@ -499,7 +499,7 @@ function RevenueExpenseCard() {
                 stroke={tokens.primary}
                 strokeWidth={3}
                 dot={false}
-                name="Revenue"
+                name="Income"
               />
               <Line
                 type="monotone"
@@ -513,7 +513,7 @@ function RevenueExpenseCard() {
           </ResponsiveContainer>
         </div>
         <div style={{ display: "flex", gap: 18, marginTop: 4 }}>
-          <Legend color={tokens.accentBlue} label="Revenue" />
+          <Legend color={tokens.accentBlue} label="Income" />
           <Legend color={tokens.accentAmber} label="Expense" />
         </div>
       </div>

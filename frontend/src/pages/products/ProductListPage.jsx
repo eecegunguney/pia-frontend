@@ -8,9 +8,9 @@ import {
 } from "lucide-react";
 import ProductFormModal from "./ProductFormModal";
 
-/* ------------------------------------------------------------------ */
-/*  Design tokens (derived from the reference UI)                      */
-/* ------------------------------------------------------------------ */
+
+/*  Design tokens                   */
+
 
 const tokens = {
   bgPage: "#eef0f7",
@@ -25,9 +25,9 @@ const tokens = {
   required: "#e14b5a",
 };
 
-/* ------------------------------------------------------------------ */
+
 /*  Mock data                                                           */
-/* ------------------------------------------------------------------ */
+
 
 const PRODUCT_TYPES = [
   "SIM Card",
@@ -61,9 +61,7 @@ const initialProducts = [
   { id: 7, code: "ACC-7007", name: "Ethernet Patch Cable 2m", type: "Accessory", price: 45 },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Small reusable pieces                                               */
-/* ------------------------------------------------------------------ */
+
 
 function Badge({ type }) {
   const style = typeStyles[type] || typeStyles.Other;
@@ -138,7 +136,7 @@ const inputStyle = {
 
 /* ------------------------------------------------------------------ */
 /*  Toolbar: search + filter + add button                              */
-/* ------------------------------------------------------------------ */
+
 
 function Toolbar({ search, onSearch, typeFilter, onTypeFilter, onAdd }) {
   return (
