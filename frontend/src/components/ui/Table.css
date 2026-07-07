@@ -1,0 +1,32 @@
+.table-container{
+    width:100%;
+    overflow-x:auto;
+    background:white;
+    border-radius:8px;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table th{
+    background:#f4f4f4;
+    padding:14px 18px;
+    text-align:left;
+    font-weight:600;
+}
+
+.table td{
+    padding:14px 18px;
+    border-top:1px solid #e5e5e5;
+}
+
+.table tbody tr:hover{
+    background:#f8fafc;
+}
+
+.empty-table{
+    text-align:center;
+    padding:30px;
+}

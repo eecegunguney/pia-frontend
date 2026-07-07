@@ -1,0 +1,24 @@
+.stock-page{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.stock-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.stock-toolbar{
+    width:350px;
+}
+
+.stock-actions{
+    display:flex;
+    gap:8px;
+}
+
+.stock-actions button{
+    padding:6px 12px;
+}
