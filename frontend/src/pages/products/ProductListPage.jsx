@@ -5,10 +5,8 @@ import {
   Plus,
   Pencil,
   Trash2,
-  FilePlus2,
-  Check,
-  X,
 } from "lucide-react";
+import ProductFormModal from "./ProductFormModal";
 
 /* ------------------------------------------------------------------ */
 /*  Design tokens (derived from the reference UI)                      */
@@ -221,7 +219,7 @@ function Toolbar({ search, onSearch, typeFilter, onTypeFilter, onAdd }) {
 /*  Product table + pagination                                         */
 /* ------------------------------------------------------------------ */
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 8;
 
 function ProductTable({ products, onEdit, onDelete }) {
   const [page, setPage] = useState(1);
@@ -355,159 +353,6 @@ function PageButton({ children, active, disabled, onClick }) {
 /*  Add / Edit Product form                                             */
 /* ------------------------------------------------------------------ */
 
-function AddProductForm({ editingProduct, onSave, onCancel }) {
-  const empty = { code: "", name: "", price: "", type: "" };
-  const [form, setForm] = useState(editingProduct || empty);
-
-  React.useEffect(() => {
-    setForm(editingProduct || empty);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editingProduct]);
-
-  const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
-
-  const handleSave = () => {
-    if (!form.code || !form.name || !form.price || !form.type) return;
-    onSave({ ...form, price: Number(form.price) });
-    setForm(empty);
-  };
-
-  return (
-    <div
-      style={{
-        background: tokens.bgCard,
-        borderRadius: 16,
-        border: `1px solid ${tokens.border}`,
-        padding: 28,
-        marginTop: 24,
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 26 }}>
-        <div
-          style={{
-            width: 44,
-            height: 44,
-            borderRadius: 12,
-            background: tokens.primarySoft,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: tokens.primary,
-          }}
-        >
-          <FilePlus2 size={20} />
-        </div>
-        <h2 style={{ fontSize: 20, fontWeight: 800, color: tokens.textPrimary, margin: 0 }}>
-          {editingProduct ? "Edit Product" : "Add Product"}
-        </h2>
-      </div>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "24px 32px",
-        }}
-      >
-        <FormField label="Product code" required>
-          <input
-            style={inputStyle}
-            placeholder="e.g. SIM-1001"
-            value={form.code}
-            onChange={update("code")}
-          />
-        </FormField>
-
-        <FormField label="Product type" required>
-          <div style={{ position: "relative" }}>
-            <select
-              style={{ ...inputStyle, appearance: "none", paddingRight: 40, cursor: "pointer" }}
-              value={form.type}
-              onChange={update("type")}
-            >
-              <option value="" disabled>
-                Select type
-              </option>
-              {PRODUCT_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              size={18}
-              color={tokens.textMuted}
-              style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}
-            />
-          </div>
-        </FormField>
-
-        <FormField label="Product name" required>
-          <input
-            style={inputStyle}
-            placeholder="Enter product name"
-            value={form.name}
-            onChange={update("name")}
-          />
-        </FormField>
-
-        <FormField label="Price" required>
-          <input
-            type="number"
-            style={inputStyle}
-            placeholder="0.00"
-            value={form.price}
-            onChange={update("price")}
-          />
-        </FormField>
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 30 }}>
-        <button
-          onClick={() => {
-            setForm(empty);
-            onCancel();
-          }}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "13px 22px",
-            borderRadius: 10,
-            border: `1px solid ${tokens.border}`,
-            background: "#fff",
-            color: tokens.textPrimary,
-            fontSize: 15,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          <X size={16} />
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "13px 22px",
-            borderRadius: 10,
-            border: "none",
-            background: tokens.primary,
-            color: "#fff",
-            fontSize: 15,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          <Check size={16} />
-          Save product
-        </button>
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /*  Page                                                                */
@@ -518,6 +363,7 @@ export default function ProductManagementPage() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All");
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [nextId, setNextId] = useState(initialProducts.length + 1);
 
   const filtered = useMemo(() => {
@@ -563,19 +409,32 @@ export default function ProductManagementPage() {
         onSearch={setSearch}
         typeFilter={typeFilter}
         onTypeFilter={setTypeFilter}
-        onAdd={() => setEditingProduct(null)}
+        onAdd={() => {
+          setEditingProduct(null);
+          setIsModalOpen(true);
+        }}
       />
 
       <ProductTable
         products={filtered}
-        onEdit={(p) => setEditingProduct(p)}
+        onEdit={(p) => {
+          setEditingProduct(p);
+          setIsModalOpen(true);
+        }}
         onDelete={handleDelete}
       />
 
-      <AddProductForm
+      <ProductFormModal
+        visible={isModalOpen}
         editingProduct={editingProduct}
-        onSave={handleSave}
-        onCancel={() => setEditingProduct(null)}
+        onSave={(form) => {
+          handleSave(form);
+          setIsModalOpen(false);
+        }}
+        onCancel={() => {
+          setEditingProduct(null);
+          setIsModalOpen(false);
+        }}
       />
     </div>
   );

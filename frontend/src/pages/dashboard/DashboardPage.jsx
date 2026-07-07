@@ -49,6 +49,8 @@ const warehouses = [
   { city: "Istanbul", pct: 78 },
   { city: "Ankara", pct: 54 },
   { city: "Izmir", pct: 91 },
+  { city: "Antalya", pct: 68 },
+  { city: "Denizli", pct: 62 },
 ];
 
 const revenue = 2840000;
