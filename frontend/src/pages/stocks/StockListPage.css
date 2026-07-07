@@ -1,24 +1,35 @@
-.stock-page{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-}
-
-.stock-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
 .stock-toolbar{
-    width:350px;
+    display:grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items:center;
+    gap:20px;
+    width:100%;
 }
 
+.stock-toolbar input{
+    flex:1;
+    min-width:0;
+    width:100%;
+}
+
+.stock-filter{
+    width:220px;
+    height:44px;
+    border:1px solid #E5E7EB;
+    border-radius:12px;
+    padding:0 16px;
+    background:#fff;
+    font-size:15px;
+}
+
+.stock-toolbar .btn{
+    height:44px;
+    padding:0 24px;
+    white-space:nowrap;
+    width: 159px;
+}
 .stock-actions{
     display:flex;
+    flex-direction:row;
     gap:8px;
-}
-
-.stock-actions button{
-    padding:6px 12px;
 }

@@ -46,36 +46,14 @@ export default function Sidebar() {
           Products
         </NavLink>
 
-        {/* Inventory Dropdown */}
-        <div
-          className="sidebar-dropdown"
-          onMouseEnter={() => setInventoryOpen(true)}
-          onMouseLeave={() => setInventoryOpen(false)}
+        <NavLink
+            to = "/stocks"
+            className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+            }
         >
-          <div className="sidebar-link">
-            Inventory ▸
-          </div>
-
-          {inventoryOpen && (
-            <div className="submenu">
-              <NavLink
-                to="/inventory"
-                className="submenu-link"
-              >
-                Customer
-              </NavLink>
-
-              <NavLink
-                to="/stocks"
-                className="submenu-link"
-              >
-                Dealer
-              </NavLink>
-            </div>
-          )}
-        </div>
-
-    
+          Stores
+        </NavLink>
 
         <NavLink
           to="/reports"

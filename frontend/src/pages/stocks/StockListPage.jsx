@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 
 
-
+import {
+  Search,
+  ChevronDown,
+  Plus,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
 import Table from "../../components/ui/Table";
@@ -117,68 +123,77 @@ export default function StockListPage() {
       width: "18%",
     },
     {
-      header: "Actions",
-      accessor: "actions",
-      width: "13%",
-      render: (row) => (
+    header: "Actions",
+    accessor: "actions",
+    width: "13%",
+    render: (row) => (
         <div className="stock-actions">
-
-          <Button
-            variant="warning"
+        <button
+            className="icon-btn edit-btn"
             onClick={() => handleEdit(row)}
-          >
-            Edit
-          </Button>
+        >
+            <Pencil size={18} />
+        </button>
 
-          <Button
-            variant="danger"
+        <button
+            className="icon-btn delete-btn"
             onClick={() => setDeleteId(row.stock_id)}
-          >
-            Delete
-          </Button>
-
+        >
+            <Trash2 size={18} />
+        </button>
         </div>
-      ),
-    },
+    ),
+    }
   ];
 
  return (
   <>
-    <div className="stock-page">
+    <div
+        className="stock-page"
+        style={{
+            fontFamily:
+            "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        }}
+    >
+      {/* Search + Filter + Add */}
+      <div className="stock-toolbar">
 
-      <div className="stock-header">
-        <h1>Inventory Stock</h1>
+        <Input
+          placeholder="Search by product code"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <select className="stock-filter">
+          <option>All Channels</option>
+          <option>Online</option>
+          <option>Retail</option>
+        </select>
 
         <Button
-          variant="success"
+          variant="primary"
           onClick={handleAdd}
         >
           + Add Stock
         </Button>
-      </div>
 
-      <div className="stock-toolbar">
-        <Input
-          placeholder="Search product..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
       </div>
 
       <Table
         columns={columns}
         data={filteredStocks}
       />
+
     </div>
 
     <StockFormModal
-        isOpen={isModalOpen}
-        onClose={() => {
-            setIsModalOpen(false);
-            setSelectedStock(null);
-        }}
-        initialData={selectedStock}
-        onSubmit={handleSave}
+      isOpen={isModalOpen}
+      onClose={() => {
+        setIsModalOpen(false);
+        setSelectedStock(null);
+      }}
+      initialData={selectedStock}
+      onSubmit={handleSave}
     />
 
     <ConfirmDeleteModal
