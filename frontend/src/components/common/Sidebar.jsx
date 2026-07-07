@@ -59,7 +59,7 @@ export default function Sidebar() {
           {inventoryOpen && (
             <div className="submenu">
               <NavLink
-                to="/inventory/customer"
+                to="/inventory"
                 className="submenu-link"
               >
                 Customer

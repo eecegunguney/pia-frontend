@@ -89,7 +89,7 @@ import "./StockFormModal.css";
                     onChange={handleChange}
                     options={products}
                     optionValue="product_code"
-                    optionLabel="product_code" // veya product_name
+                    optionLabel="product_code" 
                 />
             )}
  
