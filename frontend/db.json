@@ -13,7 +13,8 @@
       "customer_type": "Retail",
       "segment": "Gold",
       "registration_date": "2023-01-15",
-      "is_active": true
+      "is_active": true,
+      "id": "QqwbbOXcpcw"
     },
     {
       "customer_id": 1002,
@@ -28,7 +29,8 @@
       "customer_type": "Retail",
       "segment": "Platinum",
       "registration_date": "2024-03-10",
-      "is_active": true
+      "is_active": true,
+      "id": "8JIWBcyu5I8"
     },
     {
       "customer_id": 1003,
@@ -43,7 +45,8 @@
       "customer_type": "Corporate",
       "segment": "Standard",
       "registration_date": "2022-08-19",
-      "is_active": true
+      "is_active": true,
+      "id": "lUiv0_k6m20"
     },
     {
       "customer_id": 1004,
@@ -58,7 +61,8 @@
       "customer_type": "Retail",
       "segment": "Silver",
       "registration_date": "2025-02-01",
-      "is_active": false
+      "is_active": false,
+      "id": "c0rqXe-7gpc"
     },
     {
       "customer_id": 1005,
@@ -73,7 +77,54 @@
       "customer_type": "Corporate",
       "segment": "Gold",
       "registration_date": "2021-12-11",
-      "is_active": true
+      "is_active": true,
+      "id": "DChX8VSDeJc"
+    },
+    {
+      "first_name": "customer",
+      "last_name": "lalala",
+      "email": "customer@gmail.com",
+      "phone_number": "05354568963",
+      "gender": "Female",
+      "birth_date": "2026-07-02",
+      "city": "İstanbul",
+      "district": "Kadıköy",
+      "customer_type": "Corporate",
+      "segment": "Gold",
+      "is_active": true,
+      "registration_date": "2026-07-07",
+      "id": "tvfARJKmvLg"
+    },
+    {
+      "first_name": "Aleyna",
+      "last_name": "lalala",
+      "email": "aleynagodek@outlook.com",
+      "phone_number": "05354568963",
+      "gender": "Female",
+      "birth_date": "2026-07-01",
+      "city": "Ankara",
+      "district": "Çankaya",
+      "customer_type": "Retail",
+      "segment": "",
+      "is_active": true,
+      "registration_date": "2026-07-07",
+      "id": "AvPmKRwYIgs"
+    },
+    {
+      "first_name": "denemm",
+      "last_name": "testt",
+      "email": "aleynagodek@outlook.com",
+      "phone_number": "05354568963",
+      "gender": "Male",
+      "birth_date": "2026-07-04",
+      "city": "Ankara",
+      "district": "Çankaya",
+      "customer_type": "Retail",
+      "segment": "",
+      "is_active": true,
+      "registration_date": "2026-07-07",
+      "customer_id": 1006,
+      "id": "mG2vN0SJgDk"
     }
   ],
   "PRODUCT_CATALOG": [
@@ -82,35 +133,40 @@
       "product_name": "Kablosuz Kulaklık",
       "product_type": "Electronics",
       "inventory_category": "Accessories",
-      "base_price": 1499.99
+      "base_price": 1499.99,
+      "id": "0vRz__55aZk"
     },
     {
       "product_code": "PRD-002",
       "product_name": "Akıllı Saat",
       "product_type": "Electronics",
       "inventory_category": "Wearables",
-      "base_price": 3499.50
+      "base_price": 3499.5,
+      "id": "-yUxLoOBmAI"
     },
     {
       "product_code": "PRD-003",
       "product_name": "Mekanik Klavye",
       "product_type": "Electronics",
       "inventory_category": "Peripherals",
-      "base_price": 1850.00
+      "base_price": 1850,
+      "id": "Vm7T1bo642o"
     },
     {
       "product_code": "PRD-004",
       "product_name": "Sırt Çantası",
       "product_type": "Textile",
       "inventory_category": "Bags",
-      "base_price": 899.00
+      "base_price": 899,
+      "id": "YWn9ksteKGM"
     },
     {
       "product_code": "PRD-005",
       "product_name": "Termos 1L",
       "product_type": "Home",
       "inventory_category": "Kitchenware",
-      "base_price": 650.25
+      "base_price": 650.25,
+      "id": "WHwFiWVQ6Zw"
     }
   ],
   "SALES_CHANNEL": [
@@ -119,35 +175,40 @@
       "channel_name": "E-Ticaret Web Sitesi",
       "channel_type": "Online",
       "city": "İstanbul",
-      "district": "Merkez"
+      "district": "Merkez",
+      "id": "nvREgh9JYVw"
     },
     {
       "sales_channel_id": 2,
       "channel_name": "Mobil Uygulama",
       "channel_type": "Mobile",
       "city": "İstanbul",
-      "district": "Merkez"
+      "district": "Merkez",
+      "id": "ToLCc6zKg_A"
     },
     {
       "sales_channel_id": 3,
       "channel_name": "Kadıköy Mağaza",
       "channel_type": "Physical",
       "city": "İstanbul",
-      "district": "Kadıköy"
+      "district": "Kadıköy",
+      "id": "h44TxcAKlio"
     },
     {
       "sales_channel_id": 4,
       "channel_name": "Alsancak Mağaza",
       "channel_type": "Physical",
       "city": "İzmir",
-      "district": "Konak"
+      "district": "Konak",
+      "id": "H3ag-ayQIKc"
     },
     {
       "sales_channel_id": 5,
       "channel_name": "Trendyol Pazaryeri",
       "channel_type": "Partner",
       "city": "İstanbul",
-      "district": "Şişli"
+      "district": "Şişli",
+      "id": "xMKoZO4Ul3w"
     }
   ],
   "CUSTOMER_INVENTORY": [
@@ -159,7 +220,8 @@
       "order_date": "2026-05-12",
       "status": "Delivered",
       "created_at": "2026-05-12T14:32:00Z",
-      "updated_at": "2026-05-14T11:20:00Z"
+      "updated_at": "2026-05-14T11:20:00Z",
+      "id": "kgyBeXd3k6A"
     },
     {
       "customer_inventory_id": 5002,
@@ -169,7 +231,8 @@
       "order_date": "2026-06-01",
       "status": "Shipped",
       "created_at": "2026-06-01T09:15:00Z",
-      "updated_at": "2026-06-02T16:45:00Z"
+      "updated_at": "2026-06-02T16:45:00Z",
+      "id": "WzSZ7f8g8sk"
     },
     {
       "customer_inventory_id": 5003,
@@ -179,7 +242,8 @@
       "order_date": "2026-06-10",
       "status": "Delivered",
       "created_at": "2026-06-10T18:22:00Z",
-      "updated_at": "2026-06-10T19:00:00Z"
+      "updated_at": "2026-06-10T19:00:00Z",
+      "id": "y0Wxo3FLuC4"
     },
     {
       "customer_inventory_id": 5004,
@@ -189,7 +253,8 @@
       "order_date": "2026-06-25",
       "status": "Cancelled",
       "created_at": "2026-06-25T11:05:00Z",
-      "updated_at": "2026-06-25T13:12:00Z"
+      "updated_at": "2026-06-25T13:12:00Z",
+      "id": "In60SGHNvzU"
     },
     {
       "customer_inventory_id": 5005,
@@ -199,7 +264,8 @@
       "order_date": "2026-07-02",
       "status": "Processing",
       "created_at": "2026-07-02T15:40:00Z",
-      "updated_at": "2026-07-02T15:40:00Z"
+      "updated_at": "2026-07-02T15:40:00Z",
+      "id": "UnQsHV1rXFA"
     }
   ],
   "PRODUCT_PRICE": [
@@ -207,31 +273,36 @@
       "product_price_id": 2001,
       "product_code": "PRD-001",
       "year": 2026,
-      "price": 1499.99
+      "price": 1499.99,
+      "id": "rYevQGrsObA"
     },
     {
       "product_price_id": 2002,
       "product_code": "PRD-002",
       "year": 2026,
-      "price": 3499.50
+      "price": 3499.5,
+      "id": "8eCDGwfwL84"
     },
     {
       "product_price_id": 2003,
       "product_code": "PRD-003",
       "year": 2026,
-      "price": 1850.00
+      "price": 1850,
+      "id": "nTbpO2tw4hU"
     },
     {
       "product_price_id": 2004,
       "product_code": "PRD-004",
       "year": 2026,
-      "price": 899.00
+      "price": 899,
+      "id": "Dk7VpqAD8Yg"
     },
     {
       "product_price_id": 2005,
       "product_code": "PRD-005",
       "year": 2026,
-      "price": 650.25
+      "price": 650.25,
+      "id": "icbEVJSZ9Oc"
     }
   ],
   "INVENTORY_STOCK": [
@@ -242,7 +313,8 @@
       "current_stock": 120,
       "minimum_stock_level": 20,
       "maximum_stock_level": 500,
-      "last_restock_date": "2026-05-01"
+      "last_restock_date": "2026-05-01",
+      "id": "mcWwjH7yxLI"
     },
     {
       "stock_id": 3002,
@@ -251,7 +323,8 @@
       "current_stock": 45,
       "minimum_stock_level": 10,
       "maximum_stock_level": 150,
-      "last_restock_date": "2026-05-15"
+      "last_restock_date": "2026-05-15",
+      "id": "cMwwJ4Y4Vi0"
     },
     {
       "stock_id": 3003,
@@ -260,7 +333,8 @@
       "current_stock": 15,
       "minimum_stock_level": 15,
       "maximum_stock_level": 100,
-      "last_restock_date": "2026-04-20"
+      "last_restock_date": "2026-04-20",
+      "id": "8aLQjUMlAjY"
     },
     {
       "stock_id": 3004,
@@ -269,7 +343,8 @@
       "current_stock": 85,
       "minimum_stock_level": 30,
       "maximum_stock_level": 300,
-      "last_restock_date": "2026-06-10"
+      "last_restock_date": "2026-06-10",
+      "id": "szjyfUsi9cg"
     },
     {
       "stock_id": 3005,
@@ -278,7 +353,8 @@
       "current_stock": 210,
       "minimum_stock_level": 50,
       "maximum_stock_level": 600,
-      "last_restock_date": "2026-06-18"
+      "last_restock_date": "2026-06-18",
+      "id": "SmhB0ssxw4k"
     }
   ],
   "APP_USER": [
@@ -290,7 +366,8 @@
       "username": "gokhan_admin",
       "password": "1234",
       "password_hash": "$2b$12$eImiTxWIp5T87WG/KjKvwO23K9b...",
-      "role": "Administrator"
+      "role": "Administrator",
+      "id": "NEBJbOTfwlI"
     },
     {
       "user_id": 8002,
@@ -299,7 +376,8 @@
       "email": "selin.yilmaz@company.com",
       "username": "selin_stock",
       "password_hash": "$2b$12$k8Yskdf8923jksdhfuiysd7f82...",
-      "role": "Inventory Manager"
+      "role": "Inventory Manager",
+      "id": "ffv30A1eg_Q"
     },
     {
       "user_id": 8003,
@@ -308,7 +386,8 @@
       "email": "murat.aydin@company.com",
       "username": "murat_sales",
       "password_hash": "$2b$12$J923uihksdjfh28937hsdjfh2...",
-      "role": "Sales Rep"
+      "role": "Sales Rep",
+      "id": "LpHyg9hccyI"
     },
     {
       "user_id": 8004,
@@ -317,7 +396,8 @@
       "email": "asli.gunes@company.com",
       "username": "asli_support",
       "password_hash": "$2b$12$P0123jksdhfuih2378hsdjfhui...",
-      "role": "Customer Support"
+      "role": "Customer Support",
+      "id": "_kAK71ewsmA"
     },
     {
       "user_id": 8005,
@@ -326,7 +406,9 @@
       "email": "deniz.cetin@company.com",
       "username": "deniz_analyst",
       "password_hash": "$2b$12$L8923hksjdhfui2387hsdjfhui...",
-      "role": "Data Analyst"
+      "role": "Data Analyst",
+      "id": "mIUua4X04vw"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

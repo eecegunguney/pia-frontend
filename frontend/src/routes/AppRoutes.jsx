@@ -5,7 +5,7 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 import LoginPage from "../pages/auth/LoginPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import CustomerListPage from "../pages/customers/CustomerListPage";
-import CustomerDetailPage from "../pages/customers/CustomerDetailPage";
+import CustomerDetailPage from "../pages/customers/CustomerDetailModal";
 import InventoryListPage from "../pages/inventory/InventoryListPage";
 import ProductListPage from "../pages/products/ProductListPage";
 import Layout from "../components/common/Layout";

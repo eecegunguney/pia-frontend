@@ -1,0 +1,151 @@
+:root {
+  --primary-color: #1a62ff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --danger-text: #ef4444;
+  --danger-bg: #fee2e2;
+}
+
+.customer-container {
+  width: 95%;
+  margin: 25px auto;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.btn:hover {
+  background: #0f52ff;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.custom-table th {
+  background: #f8fafc;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table td {
+  padding: 20px 18px;
+  border-bottom: 1px solid var(--border-color);
+  color: #334155;
+}
+
+.custom-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn-icon:hover {
+  transform: scale(1.05);
+}
+
+.btn-detail {
+  background: #eef4ff;
+  color: #2563eb;
+}
+
+.btn-edit {
+  background: #eef4ff;
+  color: #2563eb;
+}
+
+.btn-delete {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.search-bar {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  max-width: 320px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .customer-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .custom-table {
+    min-width: 900px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
