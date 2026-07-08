@@ -4,7 +4,6 @@ import "./CustomerFormModal.css";
 import { IoMdClose } from "react-icons/io";
 import { FiFilePlus, FiCheck } from "react-icons/fi";
 
-
 function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -18,7 +17,8 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
     customer_type: "",
     segment: "",
     is_active: true,
-    registration_date: ""
+    registration_date: "",
+    company_name:""
   });
 
   const [errors, setErrors] = useState({});
@@ -26,6 +26,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   const [districts, setDistricts] = useState([]);
   const [customerTypes, setCustomerTypes] = useState([]);
   const [segments, setSegments] = useState([]);
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
     if (isOpen && customer) {
@@ -41,7 +42,8 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
         customer_type: customer.customer_type || "",
         segment: customer.segment || "",
         is_active: customer.is_active ?? true,
-        registration_date: customer.registration_date || ""
+        registration_date: customer.registration_date || "",
+        company_name: customer.company_name || ""
       });
       setErrors({});
     }
@@ -52,10 +54,14 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
       const uniqueCities = [...new Set(customers.map(c => c.city).filter(Boolean))];
       const uniqueTypes = [...new Set(customers.map(c => c.customer_type).filter(Boolean))];
       const uniqueSegments = [...new Set(customers.map(c => c.segment).filter(Boolean))];
+      const uniqueCompanies = [
+        ...new Set(customers.map((c) => c.company_name).filter(Boolean)),
+      ];
 
       setCities(uniqueCities);
       setCustomerTypes(uniqueTypes);
       setSegments(uniqueSegments);
+      setCompanies(uniqueCompanies);
     }
   }, [isOpen, customers]);
 
@@ -75,9 +81,24 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === "customer_type") {
+      setFormData((prev) => ({
+        ...prev,
+        customer_type: value,
+        company_name: value === "Retail" ? "" : prev.company_name,
+      }));
+
+      if (errors[name]) {
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+      }
+
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
 
     if (errors[name]) {
@@ -110,6 +131,9 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
     if (!formData.city) newErrors.city = "City is required";
     if (!formData.district) newErrors.district = "District is required";
     if (!formData.customer_type) newErrors.customer_type = "Customer Type is required";
+     if (formData.customer_type === "Corporate" && !formData.company_name) {
+      newErrors.company_name = "Company Name is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -136,7 +160,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay">
       <div className="customer-modal" onClick={(e) => e.stopPropagation()}>
         <button type="button" className="modal-close-btn" onClick={onClose}>
           <IoMdClose size={18} />
@@ -200,7 +224,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
             {/* İl */}
             <div>
-              <label>City (İl)<span className="required-star">*</span></label>
+              <label>City<span className="required-star">*</span></label>
               <select name="city" value={formData.city} onChange={handleChange} style={errors.city ? { borderColor: "red" } : {}} >
                 <option value="">Select City</option>
                 {cities.map((city, index) => (
@@ -212,7 +236,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
             {/* İlçe */}
             <div>
-              <label>District (İlçe)<span className="required-star">*</span></label>
+              <label>District<span className="required-star">*</span></label>
               <select name="district" value={formData.district} onChange={handleChange} disabled={!formData.city} style={errors.district ? { borderColor: "red" } : {}} >
                 <option value="">Select District</option>
                 {districts.map((district, index) => (
@@ -233,6 +257,37 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
               </select>
               {errors.customer_type && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.customer_type}</span>}
             </div>
+            <div>
+              <label>Company Name</label>
+
+              <select
+                name="company_name"
+                value={formData.company_name}
+                onChange={handleChange}
+                disabled={formData.customer_type !== "Corporate"}
+                style={errors.company_name ? { borderColor: "red" } : {}}
+                {...(errors.company_name && (
+                  <span
+                    style={{
+                      color: "red",
+                      fontSize: "12px",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {errors.company_name}
+                  </span>
+                ))}
+              >
+                <option value="">Select Company</option>
+
+                {companies.map((company, index) => (
+                  <option key={index} value={company}>
+                    {company}
+                  </option>
+                ))}
+              </select>
+              {errors.customer_type && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.customer_type}</span>}
+              </div>
 
             {/* Kayıt Tarihi (Edit modunda da değiştirilemez bıraktım) */}
             <div>

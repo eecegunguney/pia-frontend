@@ -49,6 +49,7 @@ function CustomerListPage() {
       console.error(error);
     }
   };
+  
   const handleUpdateCustomer = (updatedCustomer) => {
     setCustomers((prev) =>
       prev.map((item) =>
@@ -122,9 +123,9 @@ function CustomerListPage() {
             <th>Customer Name</th>
             <th>Surname</th>
             <th className="hide-mobile">Email</th>
-            <th>City</th>
             <th className="hide-mobile hide-tablet">District</th>
             <th className="hide-mobile hide-tablet">Registration Date</th>
+            <th className="hide-mobile">Company Name</th>
             <th style={{ textAlign: "center" }}>Actions</th>
           </tr>
         </thead>
@@ -138,6 +139,7 @@ function CustomerListPage() {
               <td>{customer.city}</td>
               <td className="hide-mobile hide-tablet">{customer.district}</td>
               <td className="hide-mobile hide-tablet">{customer.registration_date}</td>
+              <td className="hide-mobile">{customer.company_name || "-"}</td>
 
               <td className="actions-cell">
                 <button
