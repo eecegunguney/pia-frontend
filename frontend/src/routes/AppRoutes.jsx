@@ -10,6 +10,9 @@ import InventoryListPage from "../pages/inventory/InventoryListPage";
 import ProductListPage from "../pages/products/ProductListPage";
 import Layout from "../components/common/Layout";
 import StockListPage from "../pages/stocks/StockListPage";
+import CityPage from "../pages/analyses/city";
+import CustomerTypePage from "../pages/analyses/customertype";
+import FeedbackPage from "../pages/analyses/feedback";
 
 export default function AppRoutes() {
   return (
@@ -28,6 +31,39 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+<Route
+  path="/city"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <CityPage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/customertype"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <CustomerTypePage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/feedback"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <FeedbackPage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
       <Route
         path="/customer"

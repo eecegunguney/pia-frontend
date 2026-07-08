@@ -1,10 +1,15 @@
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
+  CartesianGrid,
   XAxis,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import InboxIcon from '@mui/icons-material/Inbox';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 /* ------------------------------------------------------------------ */
 /*  Design tokens (derived from the reference dashboard)               */
@@ -50,12 +55,16 @@ const warehouses = [
   { city: "Ankara", pct: 54 },
   { city: "Izmir", pct: 91 },
   { city: "Antalya", pct: 68 },
-  { city: "Denizli", pct: 62 },
+];
+
+const salesSummaryMetrics = [
+  { icon: InboxIcon, label: "Orders Received", value: "4,236", trend: "26%", trendDir: "up" },
+  { icon: LocalShippingIcon, label: "Orders Shipped", value: "2,778", trend: "20%", trendDir: "down" },
+  { icon: AutorenewIcon, label: "Orders Returned", value: "147", trend: "8%", trendDir: "down" },
+  { icon: CancelIcon, label: "Orders Canceled", value: "537", trend: "6%", trendDir: "up" },
 ];
 
 const revenue = 2840000;
-const expense = 1948000;
-const expensePctOfRevenue = Math.round((expense / revenue) * 100);
 
 const trend = [
   { month: "Jan", revenue: 2.2, expense: 1.6 },
@@ -93,7 +102,7 @@ function Card({ children, style }) {
         border: `1px solid ${tokens.border}`,
         borderRadius: 16,
         boxShadow: "0 1px 2px rgba(16,24,40,0.04)",
-        padding: "28px",
+        padding: "16px",
         display: "flex",
         flexDirection: "column",
         ...style,
@@ -108,10 +117,10 @@ function CardTitle({ children }) {
   return (
     <h2
       style={{
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 800,
         color: tokens.textPrimary,
-        margin: "0 0 20px 0",
+        margin: "0 0 16px 0",
         letterSpacing: "-0.01em",
       }}
     >
@@ -124,24 +133,24 @@ function CardTitle({ children }) {
 /*  Stock Check card                                                    */
 /* ------------------------------------------------------------------ */
 
-function StockCheckCard() {
+function StockCheckCard({ style = {} }) {
   return (
     <Card
       style={{
         background: tokens.dangerSoft,
         border: `1px solid ${tokens.danger}`,
         position: "relative",
-        minHeight: 190,
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        ...style,
       }}
     >
       <div
         style={{
           position: "absolute",
-          top: -16,
-          right: -16,
-          width: 34,
-          height: 34,
+          top: -14,
+          right: -14,
+          width: 30,
+          height: 30,
           borderRadius: "50%",
           background: tokens.danger,
           display: "flex",
@@ -150,16 +159,16 @@ function StockCheckCard() {
           boxShadow: "0 4px 12px rgba(224,80,92,0.25)",
         }}
       >
-        <span style={{ color: "white", fontWeight: 800, fontSize: 18 }}>
+        <span style={{ color: "white", fontWeight: 800, fontSize: 16 }}>
           !
         </span>
       </div>
       <div
         style={{
-          fontSize: 15,
+          fontSize: 12,
           fontWeight: 700,
           color: tokens.textSecondary,
-          marginBottom: 14,
+          marginBottom: 10,
           textTransform: "uppercase",
           letterSpacing: "0.04em",
         }}
@@ -168,7 +177,7 @@ function StockCheckCard() {
       </div>
       <div
         style={{
-          fontSize: 68,
+          fontSize: 48,
           fontWeight: 800,
           color: tokens.textPrimary,
           lineHeight: 1,
@@ -178,7 +187,7 @@ function StockCheckCard() {
       </div>
       <div
         style={{
-          fontSize: 16,
+          fontSize: 13,
           color: tokens.textSecondary,
           marginTop: 8,
           fontWeight: 500,
@@ -196,10 +205,10 @@ function StockCheckCard() {
 
 function Gauge({ label, pct }) {
   const color = occupancyColor(pct);
-  const size = 168;
+  const size = 132;
   const cx = size / 2;
   const cy = size / 2;
-  const r = 66;
+  const r = 54;
   const startAngle = 180;
   const endAngle = 0;
   const angleForPct = (p) => startAngle + (endAngle - startAngle) * (p / 100);
@@ -222,7 +231,7 @@ function Gauge({ label, pct }) {
   };
 
   const needleAngle = angleForPct(pct);
-  const needleLen = r - 14;
+  const needleLen = r - 12;
   const needleRad = (needleAngle * Math.PI) / 180;
   const needleX = cx + needleLen * Math.cos(needleRad);
   const needleY = cy - needleLen * Math.sin(needleRad);
@@ -234,22 +243,22 @@ function Gauge({ label, pct }) {
         flexDirection: "column",
         alignItems: "center",
         flex: 1,
-        minWidth: 140,
+        minWidth: 120,
       }}
     >
-      <svg width={size} height={size * 0.72} viewBox={`0 0 ${size} ${cy + 24}`}>
+      <svg width={size} height={size * 0.72} viewBox={`0 0 ${size} ${cy + 22}`}>
         <path
           d={describeArc(0, 100)}
           fill="none"
           stroke={tokens.track}
-          strokeWidth={12}
+          strokeWidth={10}
           strokeLinecap="round"
         />
         <path
           d={describeArc(0, pct)}
           fill="none"
           stroke={color}
-          strokeWidth={12}
+          strokeWidth={10}
           strokeLinecap="round"
         />
         <line
@@ -261,21 +270,21 @@ function Gauge({ label, pct }) {
           strokeWidth={3}
           strokeLinecap="round"
         />
-        <circle cx={cx} cy={cy} r={5} fill={tokens.textPrimary} />
+        <circle cx={cx} cy={cy} r={4} fill={tokens.textPrimary} />
         <text
-          x={12}
-          y={cy + 18}
+          x={10}
+          y={cy + 16}
           fill={tokens.textSecondary}
-          fontSize="11"
+          fontSize="10"
           fontWeight="600"
         >
           0%
         </text>
         <text
-          x={size - 30}
-          y={cy + 18}
+          x={size - 32}
+          y={cy + 16}
           fill={tokens.textSecondary}
-          fontSize="11"
+          fontSize="10"
           fontWeight="600"
         >
           100%
@@ -283,18 +292,18 @@ function Gauge({ label, pct }) {
       </svg>
       <div
         style={{
-          fontSize: 26,
+          fontSize: 24,
           fontWeight: 800,
           color: tokens.textPrimary,
           marginTop: -6,
         }}
       >
         {pct}
-        <span style={{ fontSize: 15, fontWeight: 700 }}>%</span>
+        <span style={{ fontSize: 14, fontWeight: 700 }}>%</span>
       </div>
       <div
         style={{
-          fontSize: 14,
+          fontSize: 13,
           color: tokens.textSecondary,
           fontWeight: 600,
           marginTop: 2,
@@ -306,16 +315,85 @@ function Gauge({ label, pct }) {
   );
 }
 
-function WarehouseOccupancyCard() {
+function MetricTile({ icon: Icon, label, value, trend, trendDir }) {
   return (
-    <Card style={{ flex: 1 }}>
+    <div
+      className="metric-tile"
+      style={{
+        background: tokens.bgCardSoft,
+        borderRadius: 18,
+        padding: "14px 16px",
+        display: "grid",
+        gridTemplateColumns: "auto 1fr",
+        gap: 12,
+        alignItems: "center",
+        height: "100%",
+      }}
+    >
+      <div
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: tokens.bgCard,
+          fontSize: 18,
+        }}
+      >
+        <Icon style={{ fontSize: 22, color: tokens.textPrimary }} />
+      </div>
+      <div>
+        <div className="metric-label" style={{ fontSize: 14, color: tokens.textSecondary, fontWeight: 600 }}>
+          {label}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 8 }}>
+          <div className="metric-value" style={{ fontSize: 22, fontWeight: 800, color: tokens.textPrimary }}>
+            {value}
+          </div>
+          <div
+            className="metric-trend"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+              fontSize: 12,
+              fontWeight: 700,
+              color: trendDir === "up" ? tokens.accentGreen : tokens.accentRed,
+            }}
+          >
+            <span>{trendDir === "up" ? "▲" : "▼"}</span>
+            <span>{trend}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SalesSummaryCard({ style = {} }) {
+  return (
+    <Card style={{ flex: 1, minHeight: 0, ...style }}>
+      <CardTitle>Sales summary</CardTitle>
+      <div className="sales-summary-grid" style={{ flex: 1, minHeight: 0 }}>
+        {salesSummaryMetrics.map((metric) => (
+          <MetricTile key={metric.label} {...metric} />
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+function WarehouseOccupancyCard({ style = {} }) {
+  return (
+    <Card style={{ flex: 1, minHeight: 0, ...style }}>
       <CardTitle>Sales</CardTitle>
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: 8,
-          flexWrap: "wrap",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 10,
           marginTop: 4,
         }}
       >
@@ -333,9 +411,9 @@ function WarehouseOccupancyCard() {
 
 function StockOverviewTable() {
   return (
-    <Card style={{ flex: 1 }}>
+    <Card style={{ flex: 13000 }}>
       <CardTitle>Company stock overview</CardTitle>
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto", maxHeight: 500, overflowY: "auto" }}>
         <table
           style={{
             width: "100%",
@@ -369,9 +447,9 @@ function thStyle(align) {
   return {
     textAlign: align,
     color: tokens.textPrimary,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 700,
-    padding: "18px 16px",
+    padding: "14px 12px",
   };
 }
 
@@ -379,9 +457,9 @@ function tdStyle(align) {
   return {
     textAlign: align,
     color: tokens.textPrimary,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: 500,
-    padding: "18px 16px",
+    padding: "14px 12px",
   };
 }
 
@@ -389,144 +467,78 @@ function tdStyle(align) {
 /*  Revenue & Expense card                                             */
 /* ------------------------------------------------------------------ */
 
-function RevenueExpenseCard() {
+function RevenueExpenseCard({ style = {} }) {
   return (
-    <Card style={{ flex: 1 }}>
-      <CardTitle>İncome &amp; expense</CardTitle>
+    <Card style={{ flex: 1, ...style }}>
+      <CardTitle>Income</CardTitle>
       <div
         style={{
           display: "flex",
-          gap: 40,
+          gap: 16,
           flexWrap: "wrap",
           alignItems: "flex-start",
         }}
       >
         <div>
-          <div style={{ fontSize: 44, fontWeight: 800, color: tokens.textPrimary, lineHeight: 1 }}>
+          <div style={{ fontSize: 30, fontWeight: 800, color: tokens.textPrimary, lineHeight: 1 }}>
             {formatMoney(revenue)}
           </div>
-          <div style={{ fontSize: 15, color: tokens.textSecondary, marginTop: 6, fontWeight: 500 }}>
+          <div style={{ fontSize: 13, color: tokens.textSecondary, marginTop: 6, fontWeight: 500 }}>
             Total income
           </div>
         </div>
-        <div>
-          <div style={{ fontSize: 44, fontWeight: 800, color: tokens.textPrimary, lineHeight: 1 }}>
-            {formatMoney(expense)}
-          </div>
-          <div style={{ fontSize: 15, color: tokens.textSecondary, marginTop: 6, fontWeight: 500 }}>
-            Total expense
-          </div>
-        </div>
 
-        <div style={{ flex: 1, minWidth: 240, paddingTop: 4 }}>
+        <div style={{ flex: 1, minWidth: 200, paddingTop: 2 }}>
           <div
             style={{
-              fontSize: 14,
-              color: tokens.textSecondary,
-              fontWeight: 600,
-              marginBottom: 10,
-            }}
-          >
-            Expense as % of income
-          </div>
-          <div
-            style={{
-              width: "100%",
-              height: 14,
-              borderRadius: 7,
-              background: tokens.track,
-              overflow: "hidden",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: `${expensePctOfRevenue}%`,
-                background: `linear-gradient(90deg, ${tokens.accentBlue}, ${tokens.accentAmber})`,
-                borderRadius: 7,
-              }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: 6,
               fontSize: 13,
               color: tokens.textSecondary,
               fontWeight: 600,
+              marginBottom: 6,
             }}
           >
-            <span>{expensePctOfRevenue}% spent</span>
-            <span>100%</span>
+            Income by month
+          </div>
+          <div style={{ width: "100%", height: 90 }}>
+            <ResponsiveContainer>
+              <AreaChart data={trend} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={tokens.primary} stopOpacity={0.35} />
+                    <stop offset="100%" stopColor={tokens.primary} stopOpacity={0.05} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke={tokens.track} strokeDasharray="3 3" vertical={false} />
+                <XAxis
+                  dataKey="month"
+                  stroke={tokens.textSecondary}
+                  tick={{ fill: tokens.textSecondary, fontSize: 10 }}
+                  axisLine={{ stroke: tokens.border }}
+                  tickLine={false}
+                />
+                <Tooltip
+                  contentStyle={{
+                    background: tokens.bgCardSoft,
+                    border: `1px solid ${tokens.border}`,
+                    borderRadius: 10,
+                    color: tokens.textPrimary,
+                  }}
+                  formatter={(v) => `$${v}M`}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke={tokens.primary}
+                  fill="url(#incomeGradient)"
+                  strokeWidth={2}
+                  name="Income"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
-
-      <div style={{ marginTop: 28 }}>
-        <div
-          style={{
-            fontSize: 15,
-            color: tokens.textSecondary,
-            fontWeight: 600,
-            marginBottom: 8,
-          }}
-        >
-          Income vs. expense by month
-        </div>
-        <div style={{ width: "100%", height: 140 }}>
-          <ResponsiveContainer>
-            <LineChart data={trend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-              <XAxis
-                dataKey="month"
-                stroke={tokens.textSecondary}
-                tick={{ fill: tokens.textSecondary, fontSize: 12 }}
-                axisLine={{ stroke: tokens.border }}
-                tickLine={false}
-              />
-              <Tooltip
-                contentStyle={{
-                  background: tokens.bgCardSoft,
-                  border: `1px solid ${tokens.border}`,
-                  borderRadius: 10,
-                  color: tokens.textPrimary,
-                }}
-                formatter={(v) => `$${v}M`}
-              />
-              <Line
-                type="monotone"
-                dataKey="revenue"
-                stroke={tokens.primary}
-                strokeWidth={3}
-                dot={false}
-                name="Income"
-              />
-              <Line
-                type="monotone"
-                dataKey="expense"
-                stroke={tokens.accentAmber}
-                strokeWidth={3}
-                dot={false}
-                name="Expense"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-        <div style={{ display: "flex", gap: 18, marginTop: 4 }}>
-          <Legend color={tokens.accentBlue} label="Income" />
-          <Legend color={tokens.accentAmber} label="Expense" />
-        </div>
-      </div>
     </Card>
-  );
-}
-
-function Legend({ color, label }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <div style={{ width: 10, height: 10, borderRadius: "50%", background: color }} />
-      <span style={{ fontSize: 13, color: tokens.textSecondary, fontWeight: 600 }}>{label}</span>
-    </div>
   );
 }
 
@@ -540,7 +552,7 @@ export default function TelecomDashboard() {
       style={{
         background: tokens.bgPage,
         minHeight: "100vh",
-        padding: 28,
+        padding: 18,
         fontFamily:
           "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
@@ -549,26 +561,82 @@ export default function TelecomDashboard() {
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
         * { box-sizing: border-box; }
         table { font-family: inherit; }
+        .top-card-row {
+          display: grid;
+          grid-template-columns: minmax(180px, 240px) 1fr;
+          gap: 10px;
+          align-items: stretch;
+        }
+        .right-column {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-items: stretch;
+          min-height: 0;
+        }
+        .sales-summary-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-auto-rows: minmax(0, 1fr);
+          align-items: stretch;
+          gap: 10px;
+          margin-top: 4px;
+          min-height: 0;
+        }
+        .metric-tile {
+          min-height: 0;
+          height: 100%;
+        }
+        .metric-label {
+          font-size: 14px;
+        }
+        .metric-value {
+          font-size: 22px;
+        }
+        .metric-trend {
+          font-size: 12px;
+        }
+        @media (max-width: 720px) {
+          .top-card-row {
+            grid-template-columns: 1fr;
+          }
+          .sales-summary-grid {
+            grid-template-columns: 1fr;
+          }
+          .metric-tile {
+            padding: 12px 14px;
+          }
+          .metric-label {
+            font-size: 13px;
+          }
+          .metric-value {
+            font-size: 20px;
+          }
+          .metric-trend {
+            font-size: 11px;
+          }
+        }
       `}</style>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "300px 1fr",
-          gap: 24,
+          gridTemplateColumns: "1.2fr 0.8fr",
+          gap: 14,
           alignItems: "stretch",
         }}
       >
-        {/* Left column */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <StockCheckCard />
-          <WarehouseOccupancyCard />
+        <div style={{ display: "grid", gap: 10 }}>
+          <div className="top-card-row">
+            <StockCheckCard style={{ height: "100%" }} />
+            <RevenueExpenseCard style={{ height: "100%" }} />
+          </div>
+          <StockOverviewTable />
         </div>
 
-        {/* Right column */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <StockOverviewTable />
-          <RevenueExpenseCard />
+        <div className="right-column">
+          <WarehouseOccupancyCard style={{ flex: 1, minHeight: 0 }} />
+          <SalesSummaryCard style={{ flex: 1, minHeight: 0 }} />
         </div>
       </div>
     </div>
