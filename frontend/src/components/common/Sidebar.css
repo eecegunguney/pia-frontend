@@ -14,6 +14,11 @@
 
 .sidebar-container.collapsed {
   width: 84px;
+  overflow: visible;
+}
+
+.collapsed .sidebar-menu-wrapper {
+  overflow: visible;
 }
 
 /* Brand Header */
@@ -404,7 +409,7 @@
 /* Collapsed Sidebar Hover Submenu */
 .collapsed-submenu {
   position: absolute;
-  left: 60px;
+  left: 80px;
   top: 0;
   background-color: #0f172a;
   border: 1px solid rgba(255, 255, 255, 0.08);

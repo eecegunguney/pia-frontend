@@ -200,7 +200,7 @@ function StoreStockModal({ store, stocks, onClose }) {
 
         {/* Modal Content / Table */}
         <div style={{ overflowY: "auto", flex: 1, padding: "24px" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table className="responsive-modal-table" style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr>
                 <th style={th}>Product</th>
@@ -221,20 +221,20 @@ function StoreStockModal({ store, stocks, onClose }) {
                     background: idx % 2 === 0 ? "#ffffff" : "#fcfcfd"
                   }}
                 >
-                  <td style={{ ...td, fontWeight: 700 }}>{s.product_code}</td>
-                  <td style={{ ...td, fontWeight: 700 }}>
+                  <td style={{ ...td, fontWeight: 700 }} data-label="Product">{s.product_code}</td>
+                  <td style={{ ...td, fontWeight: 700 }} data-label="Current Stock">
                     {s.current_stock} <span style={{ fontSize: 13, color: tokens.textMuted, fontWeight: 500 }}>pcs</span>
                   </td>
-                  <td style={td}>{s.minimum_stock_level}</td>
-                  <td style={td}>{s.maximum_stock_level}</td>
-                  <td style={td}>
+                  <td style={td} data-label="Min Stock">{s.minimum_stock_level}</td>
+                  <td style={td} data-label="Max Stock">{s.maximum_stock_level}</td>
+                  <td style={td} data-label="Status">
                     <StockLevelBadge
                       current={s.current_stock}
                       min={s.minimum_stock_level}
                       max={s.maximum_stock_level}
                     />
                   </td>
-                  <td style={td}>{s.last_restock_date ? new Date(s.last_restock_date).toLocaleDateString() : "-"}</td>
+                  <td style={td} data-label="Last Restock">{s.last_restock_date ? new Date(s.last_restock_date).toLocaleDateString() : "-"}</td>
                 </tr>
               ))}
               {channelStocks.length === 0 && (
@@ -293,16 +293,16 @@ function StoresTable({ stores, stocks, onViewStock }) {
         boxShadow: "0 1px 3px rgba(0,0,0,0.02)"
       }}
     >
-      <div style={{ overflowY: "auto", maxHeight: "calc(100vh - 350px)" }}>
+      <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "calc(100vh - 350px)" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              <th style={th}>Store ID</th>
+              <th style={th} className="hide-mobile">Store ID</th>
               <th style={th}>Store Name</th>
               <th style={th}>Channel Type</th>
               <th style={th}>City</th>
-              <th style={th}>District</th>
-              <th style={th}>Actions</th>
+              <th style={th} className="hide-mobile hide-tablet">District</th>
+              <th style={th}>Inventory</th>
             </tr>
           </thead>
           <tbody>
@@ -321,7 +321,7 @@ function StoresTable({ stores, stocks, onViewStock }) {
                     background: idx % 2 === 0 ? "#ffffff" : "#fcfcfd"
                   }}
                 >
-                  <td style={{ ...td, fontWeight: 700 }}>{store.sales_channel_id}</td>
+                  <td style={{ ...td, fontWeight: 700 }} className="hide-mobile">{store.sales_channel_id}</td>
                   <td style={{ ...td, fontWeight: 700 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       {store.channel_name}
@@ -363,7 +363,7 @@ function StoresTable({ stores, stocks, onViewStock }) {
                     </span>
                   </td>
                   <td style={td}>{store.city}</td>
-                  <td style={td}>{store.district}</td>
+                  <td style={td} className="hide-mobile hide-tablet">{store.district}</td>
                   <td style={td}>
                     <button
                       onClick={() => onViewStock(store)}
@@ -546,6 +546,42 @@ export default function StockListPage() {
         .stats-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 12px 20px -8px rgba(0,0,0,0.08) !important;
+        }
+        @media (max-width: 640px) {
+          .responsive-modal-table thead {
+            display: none !important;
+          }
+          .responsive-modal-table tr {
+            display: block !important;
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            margin-bottom: 12px !important;
+            padding: 12px 16px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+          }
+          .responsive-modal-table td {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 8px 0 !important;
+            border: none !important;
+            border-bottom: 1px dashed #f1f5f9 !important;
+            text-align: right !important;
+            font-size: 14px !important;
+          }
+          .responsive-modal-table td:last-child {
+            border-bottom: none !important;
+          }
+          .responsive-modal-table td::before {
+            content: attr(data-label) !important;
+            font-weight: 700 !important;
+            color: #64748b !important;
+            font-size: 12px !important;
+            text-transform: uppercase !important;
+            margin-right: 16px !important;
+            text-align: left !important;
+          }
         }
       `}</style>
 

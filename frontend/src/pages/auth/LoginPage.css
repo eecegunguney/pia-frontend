@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&display=swap');
 
 * {
     box-sizing: border-box;
@@ -10,10 +10,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #090c15;
+    background: url('/login_bg.png') no-repeat center center;
+    background-size: cover;
     position: relative;
     overflow: hidden;
     font-family: 'Manrope', -apple-system, sans-serif;
+}
+
+/* Semi-transparent dark overlay for background image readability */
+.login-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(9, 12, 21, 0.65);
+    z-index: 2;
+    pointer-events: none;
 }
 
 /* Subtle background grid noise texture */
@@ -67,6 +81,80 @@
     }
 }
 
+/* Splash Intro Screen Styles */
+.intro-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+}
+
+.typing-text {
+    display: flex;
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: gap 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.letter {
+    opacity: 1;
+    transform: translateY(0);
+    display: inline-block;
+    max-width: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.typing-text:not(.morphing) .letter {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: letterFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes letterFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Morphing state: non-PIA letters fade out and collapse, PIA letters slide together */
+.typing-text.morphing {
+    gap: 0;
+    animation: morphFadeOut 0.4s ease-in forwards 1.8s;
+}
+
+.typing-text.morphing .fade-letter {
+    opacity: 0;
+    max-width: 0;
+    transform: scale(0);
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+}
+
+.typing-text.morphing .pia-letter {
+    opacity: 1;
+    color: #ffffff;
+    font-weight: 900;
+    text-shadow: none;
+}
+
+@keyframes morphFadeOut {
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
 /* Glassmorphism Card Container */
 .login-card {
     width: 420px;
@@ -83,7 +171,12 @@
     align-items: center;
 }
 
-/* Motion: Staggered Fade-in animations */
+/* Entrance animation for main card */
+.login-card-entrance {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Staggered Fade-in animations inside Card */
 .brand-logo-badge,
 .login-card h1,
 .login-card p,
@@ -92,17 +185,17 @@
 .form-options-row,
 .error-message-box,
 .submit-btn {
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.brand-logo-badge { animation-delay: 0ms; }
-.login-card h1 { animation-delay: 50ms; }
-.login-card p { animation-delay: 100ms; }
-.input-group:nth-of-type(1) { animation-delay: 150ms; }
-.input-group:nth-of-type(2) { animation-delay: 200ms; }
-.caps-lock-warning { animation-delay: 230ms; }
-.form-options-row { animation-delay: 250ms; }
-.submit-btn { animation-delay: 300ms; }
+.brand-logo-badge { animation-delay: 50ms; }
+.login-card h1 { animation-delay: 100ms; }
+.login-card p { animation-delay: 150ms; }
+.input-group:nth-of-type(1) { animation-delay: 200ms; }
+.input-group:nth-of-type(2) { animation-delay: 250ms; }
+.caps-lock-warning { animation-delay: 280ms; }
+.form-options-row { animation-delay: 300ms; }
+.submit-btn { animation-delay: 350ms; }
 
 @keyframes fadeInUp {
     0% {
@@ -389,4 +482,37 @@
 .submit-btn.loading {
     cursor: not-allowed;
     opacity: 0.8;
+}
+
+/* Welcome Back Screen Overlay */
+.welcome-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+}
+
+.welcome-text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.welcome-text .welcome-letter {
+    opacity: 0;
+    transform: translateY(12px);
+    display: inline-block;
+    max-width: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: letterFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

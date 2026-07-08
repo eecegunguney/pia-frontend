@@ -65,9 +65,9 @@ function CustomerDetailModal({ isOpen, customer, onClose }) {
             ) : (
               products.map((product) => (
                 <tr key={product.id}>
-                  <td>{product.product_code}</td>
-                  <td>{product.product_name}</td>
-                  <td>₺{product.base_price}</td>
+                  <td data-label="Product Code">{product.product_code}</td>
+                  <td data-label="Product Name">{product.product_name}</td>
+                  <td data-label="Price">₺{product.base_price}</td>
                 </tr>
               ))
             )}

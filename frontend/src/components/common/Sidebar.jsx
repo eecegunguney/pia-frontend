@@ -39,6 +39,19 @@ export default function Sidebar() {
     checkStockLevels();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setIsCollapsed(true);
+      } else {
+        setIsCollapsed(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -178,7 +191,7 @@ export default function Sidebar() {
 
         {/* ACCOUNT SECTION */}
         <div className="menu-group account-group">
-          {!isCollapsed && <div className="group-label">ACCOUNT</div>}
+
           <div className="group-items">
             <div className="menu-item" onClick={handleLogout} style={{ cursor: "pointer" }} title={isCollapsed ? "Log out" : ""}>
               <LogOut size={20} className="menu-icon" />

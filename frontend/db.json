@@ -125,6 +125,38 @@
       "registration_date": "2026-07-07",
       "customer_id": 1006,
       "id": "mG2vN0SJgDk"
+    },
+    {
+      "first_name": "0098",
+      "last_name": "990",
+      "email": "430940@hotmail.com",
+      "phone_number": "434o3",
+      "gender": "Female",
+      "birth_date": "2026-07-03",
+      "city": "İzmir",
+      "district": "Bornova",
+      "customer_type": "Retail",
+      "segment": "",
+      "is_active": true,
+      "registration_date": "2026-07-08",
+      "customer_id": 1007,
+      "id": "bTAxRGPhp8M"
+    },
+    {
+      "first_name": "00000",
+      "last_name": "1111",
+      "email": "11@hotmail.com",
+      "phone_number": "123",
+      "gender": "Male",
+      "birth_date": "2026-07-02",
+      "city": "İzmir",
+      "district": "Bornova",
+      "customer_type": "Retail",
+      "segment": "",
+      "is_active": true,
+      "registration_date": "2026-07-08",
+      "customer_id": 1008,
+      "id": "eXS2fICEi8A"
     }
   ],
   "PRODUCT_CATALOG": [

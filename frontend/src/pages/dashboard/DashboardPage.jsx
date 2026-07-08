@@ -16,20 +16,20 @@ import CancelIcon from '@mui/icons-material/Cancel';
 /* ------------------------------------------------------------------ */
 
 const tokens = {
-  bgPage: "#eef0f7",
-  bgCard: "#ffffff",
-  bgCardSoft: "#f8faff",
-  border: "#e6e8f0",
-  textPrimary: "#1b2036",
-  textSecondary: "#8b90a8",
-  primary: "#3355f4",
-  primarySoft: "#eaefff",
-  danger: "#e0505c",
-  dangerSoft: "#fdecee",
-  accentRed: "#e0505c",
-  accentAmber: "#d98424",
-  accentGreen: "#26a05b",
-  track: "rgba(27,32,54,0.08)",
+  bgPage: "#F8FAFC",
+  bgCard: "#FFFFFF",
+  bgCardSoft: "#F8FAFC",
+  border: "#E5E7EB",
+  textPrimary: "#111827",
+  textSecondary: "#6B7280",
+  primary: "#2563EB",
+  primarySoft: "#EFF6FF",
+  danger: "#EF4444",
+  dangerSoft: "#FEE2E2",
+  accentRed: "#EF4444",
+  accentAmber: "#F59E0B",
+  accentGreen: "#10B981",
+  track: "rgba(17,24,39,0.08)",
 };
 
 /* ------------------------------------------------------------------ */
@@ -616,16 +616,20 @@ export default function TelecomDashboard() {
             font-size: 11px;
           }
         }
+        .dashboard-layout-grid {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 14px;
+          align-items: stretch;
+        }
+        @media (max-width: 1024px) {
+          .dashboard-layout-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
       `}</style>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.2fr 0.8fr",
-          gap: 14,
-          alignItems: "stretch",
-        }}
-      >
+      <div className="dashboard-layout-grid">
         <div style={{ display: "grid", gap: 10 }}>
           <div className="top-card-row">
             <StockCheckCard style={{ height: "100%" }} />

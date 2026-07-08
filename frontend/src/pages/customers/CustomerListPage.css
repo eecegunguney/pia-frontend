@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #6366f1;
-  --primary-hover: #4f46e5;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
   --text-dark: #0f172a;
-  --text-muted: #94a3b8;
-  --border-color: #f1f5f9;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
   --danger-text: #ef4444;
   --danger-bg: #fee2e2;
 }
@@ -13,9 +13,8 @@
 }
 
 .customer-container {
-  width: 95%;
-  max-width: 1400px;
-  margin: 25px auto;
+  width: 100%;
+  padding: 28px;
 }
 
 /* ---- Üst Bar (Search + Filter + Button) ---- */
@@ -107,9 +106,10 @@
   width: 100%;
   border-collapse: collapse;
   background: white;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .custom-table th {
@@ -117,13 +117,13 @@
   color: var(--text-dark);
   font-weight: 700;
   font-size: 14px;
-  padding: 18px 20px;
+  padding: 18px 16px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
 
 .custom-table td {
-  padding: 18px 20px;
+  padding: 18px 16px;
   border-bottom: 1px solid var(--border-color);
   color: #334155;
   font-size: 14.5px;

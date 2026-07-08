@@ -22,3 +22,21 @@
 
     background:#f5f6f8;
 }
+
+@media (max-width: 1024px) {
+    .page-content {
+        padding: 16px;
+    }
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-content {
+        padding: 12px;
+    }
+    .hide-mobile {
+        display: none !important;
+    }
+}

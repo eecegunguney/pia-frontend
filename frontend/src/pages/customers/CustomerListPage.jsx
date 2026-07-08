@@ -88,15 +88,17 @@ function CustomerListPage() {
 
   return (
     <div className="customer-container">
-      <div className="card-header">
-        <h2 className="title">Customers</h2>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          {/* <button className="btn" onClick={() => setOpenModal(true)}>
-            <FaPlus />
-            Add Customer
-          </button> */}
-        </div>
+      {/* Page Title Header */}
+      <div style={{ marginBottom: 24 }}>
+        <h1 style={{ margin: 0, fontSize: 28, fontWeight: 800, color: "var(--text-dark)", letterSpacing: "-0.02em" }}>
+          Customers
+        </h1>
+        <p style={{ margin: "4px 0 0 0", fontSize: 14, color: "var(--text-muted)", fontWeight: 500 }}>
+          Manage your customer directory, contact info, and registration logs.
+        </p>
+      </div>
 
+      <div className="card-header">
         <div className="search-bar">
           <span className="search-icon">
             <FiSearch size={16} />
@@ -119,10 +121,10 @@ function CustomerListPage() {
           <tr>
             <th>Customer Name</th>
             <th>Surname</th>
-            <th>Email</th>
+            <th className="hide-mobile">Email</th>
             <th>City</th>
-            <th>District</th>
-            <th>Registration Date</th>
+            <th className="hide-mobile hide-tablet">District</th>
+            <th className="hide-mobile hide-tablet">Registration Date</th>
             <th style={{ textAlign: "center" }}>Actions</th>
           </tr>
         </thead>
@@ -132,10 +134,10 @@ function CustomerListPage() {
             <tr key={customer.customer_id || customer.id}>
               <td>{customer.first_name}</td>
               <td>{customer.last_name}</td>
-              <td>{customer.email}</td>
+              <td className="hide-mobile">{customer.email}</td>
               <td>{customer.city}</td>
-              <td>{customer.district}</td>
-              <td>{customer.registration_date}</td>
+              <td className="hide-mobile hide-tablet">{customer.district}</td>
+              <td className="hide-mobile hide-tablet">{customer.registration_date}</td>
 
               <td className="actions-cell">
                 <button

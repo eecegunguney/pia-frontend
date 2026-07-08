@@ -13,16 +13,16 @@ import ProductFormModal from "./ProductFormModal";
 
 
 const tokens = {
-  bgPage: "#eef0f7",
-  bgCard: "#ffffff",
-  border: "#e6e8f0",
-  textPrimary: "#1b2036",
-  textMuted: "#8b90a8",
-  primary: "#3355f4",
-  primarySoft: "#eaefff",
-  danger: "#e0505c",
-  dangerSoft: "#fdecee",
-  required: "#e14b5a",
+  bgPage: "#F8FAFC",
+  bgCard: "#FFFFFF",
+  border: "#E5E7EB",
+  textPrimary: "#111827",
+  textMuted: "#6B7280",
+  primary: "#2563EB",
+  primarySoft: "#EFF6FF",
+  danger: "#EF4444",
+  dangerSoft: "#FEE2E2",
+  required: "#EF4444",
 };
 
 
@@ -254,9 +254,9 @@ function ProductTable({ products, onEdit, onDelete }) {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${tokens.border}` }}>
-              <th style={th}>Product code</th>
+              <th style={th} className="hide-mobile">Product code</th>
               <th style={th}>Product name</th>
-              <th style={th}>Product type</th>
+              <th style={th} className="hide-mobile">Product type</th>
               <th style={th}>Price</th>
               <th style={th}>Actions</th>
             </tr>
@@ -264,9 +264,9 @@ function ProductTable({ products, onEdit, onDelete }) {
           <tbody>
             {paged.map((p) => (
               <tr key={p.id} style={{ borderBottom: `1px solid ${tokens.border}` }}>
-                <td style={{ ...td, fontWeight: 700 }}>{p.code}</td>
+                <td style={{ ...td, fontWeight: 700 }} className="hide-mobile">{p.code}</td>
                 <td style={td}>{p.name}</td>
-                <td style={td}>
+                <td style={td} className="hide-mobile">
                   <Badge type={p.type} />
                 </td>
                 <td style={{ ...td, fontWeight: 700 }}>₺{p.price.toLocaleString()}</td>
@@ -401,6 +401,16 @@ export default function ProductManagementPage() {
         input::placeholder { color: #a6aabd; }
         input:focus, select:focus { border-color: ${tokens.primary} !important; }
       `}</style>
+
+      {/* Page Title Header */}
+      <div style={{ marginBottom: 24 }}>
+        <h1 style={{ margin: 0, fontSize: 28, fontWeight: 800, color: tokens.textPrimary, letterSpacing: "-0.02em" }}>
+          Products
+        </h1>
+        <p style={{ margin: "4px 0 0 0", fontSize: 14, color: tokens.textMuted, fontWeight: 500 }}>
+          Manage your product catalog, pricing, and category types.
+        </p>
+      </div>
 
       <Toolbar
         search={search}
