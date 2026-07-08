@@ -7,6 +7,7 @@ import CustomerFormModal from "./CustomerFormModal";
 import CustomerEditModal from "./CustomerEditModal";
 import { deleteCustomer } from "../../services/customerService";
 import CustomerDetailModal from "./CustomerDetailModal";
+import { FiSearch } from "react-icons/fi";
 
 function CustomerListPage() {
   const [customers, setCustomers] = useState([]);
@@ -15,6 +16,8 @@ function CustomerListPage() {
   const [editOpen, setEditOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [detailOpen, setDetailOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
 
   const filteredCustomers = customers.filter((customer) => {
     const firstName = customer.first_name
@@ -23,6 +26,16 @@ function CustomerListPage() {
     const lastName = customer.last_name ? customer.last_name.toLowerCase() : "";
     return `${firstName} ${lastName}`.includes(searchTerm.toLowerCase());
   });
+
+  const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedCustomers = filteredCustomers.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   useEffect(() => {
     loadCustomers();
@@ -40,7 +53,7 @@ function CustomerListPage() {
     setCustomers((prev) =>
       prev.map((item) =>
         (item.customer_id || item.id) ===
-        (updatedCustomer.customer_id || updatedCustomer.id)
+          (updatedCustomer.customer_id || updatedCustomer.id)
           ? updatedCustomer
           : item,
       ),
@@ -48,7 +61,7 @@ function CustomerListPage() {
   };
 
   const handleDeleteCustomer = async (customer) => {
-    const customerId = customer.customer_id || customer.id;
+    const customerId = customer.id; // customer_id değil, her zaman id kullan
     if (!customerId) {
       console.error("HATA: Silinmek istenen müşterinin ID'si boş!", customer);
       alert("Müşteri ID'si bulunamadığı için istek engellendi.");
@@ -63,11 +76,8 @@ function CustomerListPage() {
       try {
         await deleteCustomer(customerId);
         setCustomers((prevCustomers) =>
-          prevCustomers.filter(
-            (item) => (item.customer_id || item.id) !== customerId,
-          ),
+          prevCustomers.filter((item) => item.id !== customerId),
         );
-
         alert("Müşteri başarıyla silindi.");
       } catch (error) {
         console.error("Silme hatası:", error);
@@ -80,21 +90,28 @@ function CustomerListPage() {
     <div className="customer-container">
       <div className="card-header">
         <h2 className="title">Customers</h2>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          {/* <button className="btn" onClick={() => setOpenModal(true)}>
+            <FaPlus />
+            Add Customer
+          </button> */}
+        </div>
 
+        <div className="search-bar">
+          <span className="search-icon">
+            <FiSearch size={16} />
+          </span>
+          <input
+            type="text"
+            placeholder="Search by name or surname..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <button className="btn" onClick={() => setOpenModal(true)}>
           <FaPlus />
           Add Customer
         </button>
-      </div>
-
-      <div className="search-bar">
-        <span className="search-icon">🔍</span>
-        <input
-          type="text"
-          placeholder="Search by name or surname..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
       </div>
 
       <table className="custom-table">
@@ -111,7 +128,7 @@ function CustomerListPage() {
         </thead>
 
         <tbody>
-          {filteredCustomers.map((customer) => (
+          {paginatedCustomers.map((customer) => (
             <tr key={customer.customer_id || customer.id}>
               <td>{customer.first_name}</td>
               <td>{customer.last_name}</td>
@@ -153,6 +170,42 @@ function CustomerListPage() {
           ))}
         </tbody>
       </table>
+      <div className="pagination-bar">
+        <span className="pagination-info">
+          Showing {filteredCustomers.length === 0 ? 0 : startIndex + 1} to{" "}
+          {Math.min(startIndex + itemsPerPage, filteredCustomers.length)} of{" "}
+          {filteredCustomers.length} entries
+        </span>
+
+        <div className="pagination-controls">
+          <button
+            className="page-btn"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          >
+            «
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              className={`page-btn ${currentPage === page ? "active" : ""}`}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            className="page-btn"
+            disabled={currentPage === totalPages || totalPages === 0}
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+          >
+            »
+          </button>
+        </div>
+      </div>
+
       <CustomerFormModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}

@@ -129,9 +129,12 @@
     box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
 }
 
-.logo-icon-glow {
+.logo-text-glow {
     color: #38bdf8;
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
 }
 
 .login-card h1 {

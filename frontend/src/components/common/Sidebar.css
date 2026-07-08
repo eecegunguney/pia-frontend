@@ -400,3 +400,22 @@
   line-height: 1;
   box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
 }
+
+/* Collapsed Sidebar Hover Submenu */
+.collapsed-submenu {
+  position: absolute;
+  left: 60px;
+  top: 0;
+  background-color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px;
+  min-width: 130px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.collapsed-submenu .submenu-item {
+  padding: 8px 12px;
+  font-size: 13.5px;
+}

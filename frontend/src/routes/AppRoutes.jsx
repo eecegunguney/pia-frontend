@@ -13,6 +13,7 @@ import StockListPage from "../pages/stocks/StockListPage";
 import CityPage from "../pages/analyses/city";
 import CustomerTypePage from "../pages/analyses/customertype";
 import FeedbackPage from "../pages/analyses/feedback";
+import ReportsPage from "../pages/reports/ReportsPage";
 
 export default function AppRoutes() {
   return (
@@ -119,6 +120,51 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/reports"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ReportsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/analyses/city"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <CityPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/analyses/customer-type"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <CustomerTypePage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/analyses/feedback"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <FeedbackPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
