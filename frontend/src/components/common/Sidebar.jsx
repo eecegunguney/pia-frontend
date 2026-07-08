@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
@@ -8,6 +8,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Users,
   Boxes,
 } from "lucide-react";
@@ -18,8 +19,10 @@ import "./Sidebar.css";
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [reportsOpen, setReportsOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const checkStockLevels = async () => {
@@ -51,7 +54,7 @@ export default function Sidebar() {
     { type: "route", to: "/products", label: "Products", icon: ShoppingBag },
     { type: "route", to: "/stocks", label: "Stores", icon: Boxes },
     { type: "route", to: "/reports", label: "Reports", icon: BarChart3 },
-    { type: "static", label: "Messages", icon: Mail, badge: "2" }
+
   ];
 
   return (
@@ -62,7 +65,6 @@ export default function Sidebar() {
           {!isCollapsed && (
             <div className="brand-text">
               <div className="brand-title">PiA</div>
-
             </div>
           )}
         </div>
@@ -79,6 +81,62 @@ export default function Sidebar() {
           <div className="group-items">
             {overviewItems.map((item, idx) => {
               const isStoresWarning = item.label === "Stores" && showWarning;
+
+              if (item.label === "Reports") {
+                const isReportsActive =
+                  location.pathname.startsWith("/analyses") ||
+                  location.pathname === "/reports";
+
+                return (
+                  <div
+                    key={item.to}
+                    className="reports-dropdown-container"
+                    onMouseEnter={() => setReportsOpen(true)}
+                    onMouseLeave={() => setReportsOpen(false)}
+                    style={{ position: "relative" }}
+                  >
+                    <div
+                      className={`menu-item ${isReportsActive ? "active" : ""}`}
+                      onClick={() => setReportsOpen(!reportsOpen)}
+                      style={{ cursor: "pointer" }}
+                      title={isCollapsed ? "Reports" : ""}
+                    >
+                      {!isCollapsed && <ChevronRight size={14} className="arrow-bullet" />}
+                      <div className="icon-badge-container">
+                        <item.icon size={20} className="menu-icon" />
+                      </div>
+                      {!isCollapsed && <span className="menu-label">{item.label}</span>}
+                      {!isCollapsed && (
+                        <ChevronDown
+                          size={14}
+                          style={{
+                            marginLeft: "auto",
+                            transform: reportsOpen ? "rotate(180deg)" : "rotate(0deg)",
+                            transition: "transform 0.2s"
+                          }}
+                        />
+                      )}
+                    </div>
+
+                    {reportsOpen && (
+                      <div className={`submenu-items ${isCollapsed ? "collapsed-submenu" : ""}`}>
+                        <NavLink to="/analyses/city" className="submenu-item">
+                          {!isCollapsed && <ChevronRight size={12} />}
+                          <span>City</span>
+                        </NavLink>
+                        <NavLink to="/analyses/customer-type" className="submenu-item">
+                          {!isCollapsed && <ChevronRight size={12} />}
+                          <span>Customer</span>
+                        </NavLink>
+                        <NavLink to="/analyses/feedback" className="submenu-item">
+                          {!isCollapsed && <ChevronRight size={12} />}
+                          <span>Feedback</span>
+                        </NavLink>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
 
               if (item.type === "route") {
                 return (
