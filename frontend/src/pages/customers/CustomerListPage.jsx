@@ -123,6 +123,7 @@ function CustomerListPage() {
             <th>Customer Name</th>
             <th>Surname</th>
             <th className="hide-mobile">Email</th>
+            <th>City</th>
             <th className="hide-mobile hide-tablet">District</th>
             <th className="hide-mobile hide-tablet">Registration Date</th>
             <th className="hide-mobile">Company Name</th>

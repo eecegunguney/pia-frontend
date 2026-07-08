@@ -270,7 +270,7 @@ function StoresTable({ stores, stocks, onViewStock }) {
     fontWeight: 600,
     color: "#475569",
     padding: "14px 16px",
-    background: "#F8FAFC",
+    background: "#ffffff",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
     borderBottom: `1px solid ${tokens.border}`,
