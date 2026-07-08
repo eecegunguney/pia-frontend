@@ -49,6 +49,7 @@ function CustomerListPage() {
       console.error(error);
     }
   };
+  
   const handleUpdateCustomer = (updatedCustomer) => {
     setCustomers((prev) =>
       prev.map((item) =>

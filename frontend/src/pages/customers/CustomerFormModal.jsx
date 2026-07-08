@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { addCustomer } from "../../services/customerService";
 import { IoMdClose } from "react-icons/io";
 import "./CustomerFormModal.css";
-
 import { FiFilePlus, FiCheck } from "react-icons/fi";
 
 function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {

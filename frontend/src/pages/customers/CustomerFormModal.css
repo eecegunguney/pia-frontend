@@ -187,7 +187,6 @@ select:disabled {
   background: #f3f3f3;
   cursor: not-allowed;
 }
-
 @media (max-width: 640px) {
   .customer-modal {
     padding: 22px;

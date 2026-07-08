@@ -4,7 +4,6 @@ import "./CustomerFormModal.css";
 import { IoMdClose } from "react-icons/io";
 import { FiFilePlus, FiCheck } from "react-icons/fi";
 
-
 function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   const [formData, setFormData] = useState({
     first_name: "",

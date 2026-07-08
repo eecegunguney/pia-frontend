@@ -8,7 +8,6 @@ import { IoMdClose } from "react-icons/io";
 function CustomerDetailModal({ isOpen, customer, onClose }) {
   const [products, setProducts] = useState([]);
 
-
   useEffect(() => {
     if (isOpen && customer) {
       loadProducts();
