@@ -62,3 +62,14 @@ export const updateStock = async (id, stockData) => {
 export const deleteStock = async (id) => {
   await api.delete(`${API_ENDPOINTS.INVENTORY_STOCK}/${id}`);
 };
+
+/**
+ * Retrieves all sales channels.
+ *
+ * @async
+ * @returns {Promise<Array>} Sales channels list.
+ */
+export const getSalesChannels = async () => {
+  const response = await api.get("/SALES_CHANNEL");
+  return response.data;
+};

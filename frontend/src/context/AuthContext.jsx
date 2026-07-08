@@ -14,7 +14,9 @@ export const AuthContext = createContext();
  */
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
+    const savedUserLocal = localStorage.getItem("user");
+    const savedUserSession = sessionStorage.getItem("user");
+    const savedUser = savedUserLocal || savedUserSession;
 
     return savedUser ? JSON.parse(savedUser) : null;
   });
@@ -23,10 +25,17 @@ export function AuthProvider({ children }) {
    * Logs in the user and stores the session.
    *
    * @param {Object} userData - Authenticated user information.
+   * @param {boolean} remember - Persist session across browser restarts.
    * @returns {void}
    */
-  const login = (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
+  const login = (userData, remember = false) => {
+    if (remember) {
+      localStorage.setItem("user", JSON.stringify(userData));
+      sessionStorage.removeItem("user");
+    } else {
+      sessionStorage.setItem("user", JSON.stringify(userData));
+      localStorage.removeItem("user");
+    }
 
     setUser(userData);
   };
@@ -34,14 +43,13 @@ export function AuthProvider({ children }) {
   /**
    * Logs out the current user and clears the session.
    *
-   * TODO:
-   * Remove JWT token when backend authentication is implemented.
-   *
    * @returns {void}
    */
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
 
     setUser(null);
   };

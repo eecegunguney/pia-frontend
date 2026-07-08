@@ -1,19 +1,7 @@
-# Bağımlılıklar (Axios ve diğer tüm kurulu paketler bunun içindedir)
 node_modules/
-
-# Üretim (Build) çıktıları
-dist/
-build/
-
-# Yerel ortam değişkenleri (Gizli şifreler/API anahtarları)
 .env
-.env.local
-
-# Editör özel dosyaları
+*.log
+dist/
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.swp
+.DS_Store

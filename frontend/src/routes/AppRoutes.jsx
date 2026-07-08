@@ -14,7 +14,7 @@ import StockListPage from "../pages/stocks/StockListPage";
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
 
       <Route path="/login" element={<LoginPage />} />
 
@@ -23,7 +23,7 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Layout>
-                <DashboardPage />
+              <DashboardPage />
             </Layout>
           </ProtectedRoute>
         }
@@ -34,7 +34,7 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Layout>
-                <CustomerListPage />
+              <CustomerListPage />
             </Layout>
           </ProtectedRoute>
         }
@@ -46,7 +46,7 @@ export default function AppRoutes() {
           <ProtectedRoute>
             <Layout>
               <CustomerDetailPage />
-            </Layout>       
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -67,18 +67,18 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Layout>
-                <ProductListPage />
+              <ProductListPage />
             </Layout>
           </ProtectedRoute>
         }
       />
-    
+
       <Route
         path="/stocks"
         element={
           <ProtectedRoute>
             <Layout>
-                <StockListPage />
+              <StockListPage />
             </Layout>
           </ProtectedRoute>
         }
