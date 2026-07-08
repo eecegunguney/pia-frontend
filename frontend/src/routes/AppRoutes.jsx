@@ -33,6 +33,39 @@ export default function AppRoutes() {
         }
       />
 
+<Route
+  path="/city"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <CityPage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/customertype"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <CustomerTypePage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/feedback"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <FeedbackPage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
       <Route
         path="/customer"
         element={
