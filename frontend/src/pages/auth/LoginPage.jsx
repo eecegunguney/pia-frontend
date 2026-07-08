@@ -53,7 +53,7 @@ export default function LoginPage() {
 
       <div className="login-card">
         <div className="brand-logo-badge">
-          <Lock size={22} className="logo-icon-glow" />
+          <span className="logo-text-glow">PiA</span>
         </div>
 
         <h1>Customer Inventory Management</h1>
