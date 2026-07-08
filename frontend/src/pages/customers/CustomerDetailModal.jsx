@@ -6,6 +6,7 @@ import "./CustomerDetailModal.css";
 function CustomerDetailModal({ isOpen, customer, onClose }) {
   const [products, setProducts] = useState([]);
 
+
   useEffect(() => {
     if (isOpen && customer) {
       loadProducts();

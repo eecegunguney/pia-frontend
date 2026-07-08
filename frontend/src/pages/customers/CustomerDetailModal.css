@@ -1,42 +1,43 @@
 .detail-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.45);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
+  background: rgba(0, 0, 0, .45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-.detail-modal{
-  background:#fff;
-  width:900px;
-  max-height:80vh;
-  overflow:auto;
-  border-radius:10px;
-  padding:24px;
+
+.detail-modal {
+  background: #fff;
+  width: 900px;
+  max-height: 80vh;
+  overflow: auto;
+  border-radius: 10px;
+  padding: 24px;
 }
 
-.close-btn{
-  float:right;
-  border:none;
-  background:none;
-  cursor:pointer;
-  font-size:18px;
+.close-btn {
+  float: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-.detail-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
 }
 
 .detail-table th,
-.detail-table td{
-  border:1px solid #ddd;
-  padding:10px;
+.detail-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
-.detail-table th{
-  background:#f5f5f5;
+.detail-table th {
+  background: #f5f5f5;
 }

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { editCustomer } from "../../services/customerService"; 
+import { editCustomer } from "../../services/customerService";
 import "./CustomerFormModal.css";
+import { IoMdClose } from "react-icons/io";
+import { FiFilePlus, FiCheck } from "react-icons/fi";
+
 
 function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   const [formData, setFormData] = useState({
@@ -61,7 +64,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
       const filteredDistricts = customers
         .filter(c => c.city === formData.city)
         .map(c => c.district);
-      
+
       setDistricts([...new Set(filteredDistricts.filter(Boolean))]);
     } else {
       setDistricts([]);
@@ -76,7 +79,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
       ...prev,
       [name]: type === "checkbox" ? checked : value
     }));
-    
+
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -88,7 +91,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
     if (!formData.first_name.trim()) newErrors.first_name = "Name is required";
     if (!formData.last_name.trim()) newErrors.last_name = "Surname is required";
-    
+
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
@@ -97,7 +100,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
     if (!formData.phone_number.trim()) newErrors.phone_number = "Phone number is required";
     if (!formData.gender) newErrors.gender = "Gender is required";
-    
+
     if (!formData.birth_date) {
       newErrors.birth_date = "Birth date is required";
     } else if (new Date(formData.birth_date) > new Date()) {
@@ -120,11 +123,12 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
       const payload = {
         ...formData,
         customer_id: customer.customer_id,
-        id: customer.id 
+        id: customer.id
       };
 
-      onUpdate(payload); 
-      onClose();   
+      const updated = await editCustomer(payload);
+      onUpdate(updated || payload);
+      onClose();
     } catch (error) {
       console.error("Error updating customer:", error);
       alert("Something went wrong.");
@@ -134,52 +138,58 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="customer-modal" onClick={(e) => e.stopPropagation()}>
-        
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "5px" }}>
-          <h2>Edit Customer</h2>
+        <button type="button" className="modal-close-btn" onClick={onClose}>
+          <IoMdClose size={18} />
+        </button>
+
+        <div className="modal-header">
+          <div className="modal-icon">
+            <FiFilePlus size={20} />
+          </div>
+          <h2>Edit New Customer</h2>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
-            
+
             {/* Adı */}
             <div>
-              <label>First Name *</label>
+              <label>First Name<span className="required-star">*</span></label>
               <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} style={errors.first_name ? { borderColor: "red" } : {}} />
               {errors.first_name && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.first_name}</span>}
             </div>
 
             {/* Soyadı */}
             <div>
-              <label>Last Name *</label>
+              <label>Last Name<span className="required-star">*</span></label>
               <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} style={errors.last_name ? { borderColor: "red" } : {}} />
               {errors.last_name && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.last_name}</span>}
             </div>
 
             {/* E-posta */}
             <div>
-              <label>Email *</label>
+              <label>Email<span className="required-star">*</span></label>
               <input type="email" name="email" value={formData.email} onChange={handleChange} style={errors.email ? { borderColor: "red" } : {}} />
               {errors.email && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.email}</span>}
             </div>
 
             {/* Telefon */}
             <div>
-              <label>Phone Number *</label>
+              <label>Phone Number<span className="required-star">*</span></label>
               <input type="text" name="phone_number" value={formData.phone_number} onChange={handleChange} style={errors.phone_number ? { borderColor: "red" } : {}} />
               {errors.phone_number && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.phone_number}</span>}
             </div>
 
             {/* Doğum Tarihi */}
             <div>
-              <label>Birth Date *</label>
+              <label>Birth Date<span className="required-star">*</span></label>
               <input type="date" name="birth_date" value={formData.birth_date} onChange={handleChange} style={errors.birth_date ? { borderColor: "red" } : {}} />
               {errors.birth_date && <span style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>{errors.birth_date}</span>}
             </div>
 
             {/* Cinsiyet */}
             <div>
-              <label>Gender *</label>
+              <label>Gender<span className="required-star">*</span></label>
               <select name="gender" value={formData.gender} onChange={handleChange} style={errors.gender ? { borderColor: "red" } : {}} >
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
@@ -190,7 +200,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
             {/* İl */}
             <div>
-              <label>City (İl) *</label>
+              <label>City (İl)<span className="required-star">*</span></label>
               <select name="city" value={formData.city} onChange={handleChange} style={errors.city ? { borderColor: "red" } : {}} >
                 <option value="">Select City</option>
                 {cities.map((city, index) => (
@@ -202,7 +212,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
             {/* İlçe */}
             <div>
-              <label>District (İlçe) *</label>
+              <label>District (İlçe)<span className="required-star">*</span></label>
               <select name="district" value={formData.district} onChange={handleChange} disabled={!formData.city} style={errors.district ? { borderColor: "red" } : {}} >
                 <option value="">Select District</option>
                 {districts.map((district, index) => (
@@ -214,7 +224,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
 
             {/* Müşteri Tipi */}
             <div>
-              <label>Customer Type *</label>
+              <label>Customer Type<span className="required-star">*</span></label>
               <select name="customer_type" value={formData.customer_type} onChange={handleChange} style={errors.customer_type ? { borderColor: "red" } : {}} >
                 <option value="">Select Type</option>
                 {customerTypes.map((type, index) => (
@@ -231,7 +241,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
             </div>
 
             {/* Segment */}
-            <div>
+            {/* <div>
               <label>Segment</label>
               <select name="segment" value={formData.segment} onChange={handleChange} >
                 <option value="">Select Segment</option> 
@@ -239,7 +249,7 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
                   <option key={index} value={seg}>{seg}</option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
             {/* Aktiflik Durumu */}
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "8px", marginTop: "10px" }}>
@@ -250,8 +260,8 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
           </div>
 
           <div className="modal-buttons">
-            <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
-            <button type="submit" className="save-btn">Update Customer</button>
+            <button type="button" className="cancel-btn" onClick={onClose}><IoMdClose size={16} /> Cancel</button>
+            <button type="submit" className="save-btn"><FiCheck size={16} />Update Customer</button>
           </div>
         </form>
 

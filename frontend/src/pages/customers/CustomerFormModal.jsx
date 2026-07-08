@@ -3,6 +3,8 @@ import { addCustomer } from "../../services/customerService";
 import { IoMdClose } from "react-icons/io";
 import "./CustomerFormModal.css";
 
+import { FiFilePlus, FiCheck } from "react-icons/fi";
+
 function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -160,14 +162,14 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="customer-modal" onClick={(e) => e.stopPropagation()}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "between",
-            alignItems: "center",
-            marginBottom: "5px",
-          }}
-        >
+        <button type="button" className="modal-close-btn" onClick={onClose}>
+          <IoMdClose size={18} />
+        </button>
+
+        <div className="modal-header">
+          <div className="modal-icon">
+            <FiFilePlus size={20} />
+          </div>
           <h2>Add New Customer</h2>
         </div>
 
@@ -175,7 +177,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
           <div className="form-grid">
             {/* Adı */}
             <div>
-              <label>First Name *</label>
+              <label>First Name<span className="required-star">*</span></label>
               <input
                 type="text"
                 name="first_name"
@@ -194,7 +196,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* Soyadı */}
             <div>
-              <label>Last Name *</label>
+              <label>Last Name<span className="required-star">*</span></label>
               <input
                 type="text"
                 name="last_name"
@@ -213,7 +215,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* E-posta */}
             <div>
-              <label>Email *</label>
+              <label>Email<span className="required-star">*</span></label>
               <input
                 type="email"
                 name="email"
@@ -232,7 +234,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* Telefon */}
             <div>
-              <label>Phone Number *</label>
+              <label>Phone Number<span className="required-star">*</span></label>
               <input
                 type="text"
                 name="phone_number"
@@ -252,7 +254,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* Doğum Tarihi */}
             <div>
-              <label>Birth Date *</label>
+              <label>Birth Date<span className="required-star">*</span></label>
               <input
                 type="date"
                 name="birth_date"
@@ -272,7 +274,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* Cinsiyet */}
             <div>
-              <label>Gender *</label>
+              <label>Gender<span className="required-star">*</span></label>
               <select
                 name="gender"
                 value={formData.gender}
@@ -294,7 +296,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* İl */}
             <div>
-              <label>City (İl) *</label>
+              <label>City<span className="required-star">*</span></label>
               <select
                 name="city"
                 value={formData.city}
@@ -319,7 +321,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* İlçe */}
             <div>
-              <label>District (İlçe) *</label>
+              <label>District<span className="required-star">*</span></label>
               <select
                 name="district"
                 value={formData.district}
@@ -345,7 +347,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
             {/* Müşteri Tipi */}
             <div>
-              <label>Customer Type *</label>
+              <label>Customer Type<span className="required-star">*</span></label>
               <select
                 name="customer_type"
                 value={formData.customer_type}
@@ -380,7 +382,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
             </div>
 
             {/* Segment */}
-            <div>
+            {/* <div>
               <label>Segment</label>
               <select
                 name="segment"
@@ -394,7 +396,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
             <div
               style={{
@@ -419,9 +421,11 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
 
           <div className="modal-buttons">
             <button type="button" className="cancel-btn" onClick={onClose}>
+              <IoMdClose size={16} />
               Cancel
             </button>
             <button type="submit" className="save-btn">
+              <FiCheck size={16} />
               Save Customer
             </button>
           </div>

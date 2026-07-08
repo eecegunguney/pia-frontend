@@ -11,11 +11,12 @@ export const addCustomer = async (customer) => {
   return response.data;
 };
 export const editCustomer = async (customer) => {
-  const response = await api.put("/CUSTOMER", customer);
+  const id = customer.id;
+  const response = await api.put(`/CUSTOMER/${id}`, customer);
   return response.data;
 };
 export const deleteCustomer = async (id) => {
-  const response = await api.delete("/CUSTOMER", id);
+  const response = await api.delete(`/CUSTOMER/${id}`);
   return response.data;
 };
 export const getCustomerInventory = async () => {

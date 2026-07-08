@@ -61,8 +61,8 @@ export default function Sidebar() {
         <div className="brand-logo-section">
           {!isCollapsed && (
             <div className="brand-text">
-              <div className="brand-title">Softtech</div>
-              <div className="brand-subtitle">Technology</div>
+              <div className="brand-title">PiA</div>
+
             </div>
           )}
         </div>
