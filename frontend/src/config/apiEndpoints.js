@@ -1,10 +1,11 @@
 const API_ENDPOINTS = {
-  APP_USER: "/APP_USER",
-  CUSTOMERS: "/CUSTOMERS",
-  PRODUCT_CATALOG: "/PRODUCT_CATALOG",
-  INVENTORY_STOCK: "/INVENTORY_STOCK",
-  INVENTORY_ASSIGNMENT: "/INVENTORY_ASSIGNMENT",
-  SALES_CHANNELS: "/SALES_CHANNELS",
+  AUTH_LOGIN: "/auth/login",
+  APP_USER: "/users",
+  CUSTOMERS: "/customers",
+  PRODUCT_CATALOG: "/products",
+  INVENTORY_STOCK: "/inventory-stocks",
+  INVENTORY_ASSIGNMENT: "/customer-inventories",
+  SALES_CHANNELS: "/sales-channels",
 };
 
 export default API_ENDPOINTS;

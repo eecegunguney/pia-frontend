@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Search,
   ChevronDown,
@@ -7,6 +7,12 @@ import {
   Trash2,
 } from "lucide-react";
 import ProductFormModal from "./ProductFormModal";
+import {
+  getProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "../../services/productService";
 
 
 /*  Design tokens                   */
@@ -49,6 +55,44 @@ const typeStyles = {
   Telephone: { bg: "#f2ecff", color: "#7a4de0" },
   Accessory: { bg: "#fdeaf0", color: "#d94770" },
   Other: { bg: "#f1f2f6", color: "#5c6178" },
+};
+
+const formatProductType = (type) => {
+  if (!type) return "Other";
+  switch (type.toUpperCase()) {
+    case "SIM": return "SIM Card";
+    case "MODEM": return "Modem";
+    case "ROUTER": return "Router";
+    case "FIBER_DEVICE": return "Fiber Equipment";
+    case "TV_DEVICE": return "TV Box";
+    case "SMARTPHONE": return "Telephone";
+    case "IOT_DEVICE": return "Accessory";
+    default: return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase().replace("_", " ");
+  }
+};
+
+const toBackendProductType = (type) => {
+  switch (type) {
+    case "SIM Card": return "SIM";
+    case "Modem": return "MODEM";
+    case "Router": return "ROUTER";
+    case "Fiber Equipment": return "FIBER_DEVICE";
+    case "TV Box": return "TV_DEVICE";
+    case "Telephone": return "SMARTPHONE";
+    case "Accessory": return "IOT_DEVICE";
+    default: return type.toUpperCase().replace(" ", "_");
+  }
+};
+
+const normalizeProduct = (p) => {
+  return {
+    id: p.id ?? p.productId,
+    code: p.productCode ?? p.product_code ?? "",
+    name: p.productName ?? p.product_name ?? "",
+    type: formatProductType(p.productType ?? p.product_type ?? ""),
+    price: p.basePrice ?? p.base_price ?? p.price ?? 0,
+    inventoryCategory: p.inventoryCategory ?? "PHYSICAL"
+  };
 };
 
 const initialProducts = [
@@ -139,54 +183,70 @@ const inputStyle = {
 
 
 function Toolbar({ search, onSearch, typeFilter, onTypeFilter, onAdd }) {
+  const labelStyle = {
+    display: "block",
+    fontSize: 12,
+    fontWeight: 700,
+    color: tokens.textMuted,
+    marginBottom: 6,
+    textTransform: "uppercase",
+    letterSpacing: "0.05em",
+  };
+
   return (
     <div
       style={{
         display: "flex",
         gap: 16,
-        alignItems: "center",
+        alignItems: "flex-end",
         flexWrap: "wrap",
-        marginBottom: 20,
+        marginBottom: 12,
       }}
     >
-      <div style={{ position: "relative", flex: "1 1 280px", minWidth: 240 }}>
-        <Search
-          size={18}
-          color={tokens.textMuted}
-          style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)" }}
-        />
-        <input
-          value={search}
-          onChange={(e) => onSearch(e.target.value)}
-          placeholder="Search by product name"
-          style={{ ...inputStyle, paddingLeft: 44, background: tokens.bgCard }}
-        />
+      <div style={{ flex: "1 1 280px", minWidth: 240 }}>
+        <label style={labelStyle}>Search</label>
+        <div style={{ position: "relative" }}>
+          <Search
+            size={18}
+            color={tokens.textMuted}
+            style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)" }}
+          />
+          <input
+            value={search}
+            onChange={(e) => onSearch(e.target.value)}
+            placeholder="Search by product name"
+            style={{ ...inputStyle, paddingLeft: 44, background: tokens.bgCard }}
+          />
+        </div>
       </div>
 
-      <div style={{ position: "relative", minWidth: 220 }}>
-        <select
-          value={typeFilter}
-          onChange={(e) => onTypeFilter(e.target.value)}
-          style={{
-            ...inputStyle,
-            appearance: "none",
-            paddingRight: 40,
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
-        >
-          <option value="All">All product types</option>
-          {PRODUCT_TYPES.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-        <ChevronDown
-          size={18}
-          color={tokens.textMuted}
-          style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}
-        />
+      <div style={{ minWidth: 220 }}>
+        <label style={labelStyle}>Product Type</label>
+        <div style={{ position: "relative" }}>
+          <select
+            value={typeFilter}
+            onChange={(e) => onTypeFilter(e.target.value)}
+            style={{
+              ...inputStyle,
+              appearance: "none",
+              paddingRight: 40,
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            <option value="All">All product types</option>
+            {PRODUCT_TYPES.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            size={18}
+            color={tokens.textMuted}
+            style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}
+          />
+        </div>
       </div>
 
       <button
@@ -217,7 +277,7 @@ function Toolbar({ search, onSearch, typeFilter, onTypeFilter, onAdd }) {
 /*  Product table + pagination                                         */
 /* ------------------------------------------------------------------ */
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 7;
 
 function ProductTable({ products, onEdit, onDelete }) {
   const [page, setPage] = useState(1);
@@ -228,15 +288,29 @@ function ProductTable({ products, onEdit, onDelete }) {
     if (page > totalPages) setPage(1);
   }, [totalPages, page]);
 
+  const getVisiblePages = () => {
+    const range = [];
+    const maxVisible = 3;
+    let start = Math.max(1, page - 1);
+    let end = Math.min(totalPages, start + maxVisible - 1);
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    for (let i = start; i <= end; i++) {
+      range.push(i);
+    }
+    return range;
+  };
+
   const th = {
     textAlign: "left",
     fontSize: 14,
     fontWeight: 700,
     color: tokens.textPrimary,
-    padding: "18px 16px",
+    padding: "10px 16px",
   };
   const td = {
-    padding: "18px 16px",
+    padding: "10px 16px",
     fontSize: 15,
     color: tokens.textPrimary,
   };
@@ -254,16 +328,16 @@ function ProductTable({ products, onEdit, onDelete }) {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${tokens.border}` }}>
-              <th style={th} className="hide-mobile">Product code</th>
-              <th style={th}>Product name</th>
-              <th style={th} className="hide-mobile">Product type</th>
+              <th style={th} className="hide-mobile">Product Code</th>
+              <th style={th}>Product Name</th>
+              <th style={th} className="hide-mobile">Product Type</th>
               <th style={th}>Price</th>
               <th style={th}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {paged.map((p) => (
-              <tr key={p.id} style={{ borderBottom: `1px solid ${tokens.border}` }}>
+            {paged.map((p, idx) => (
+              <tr key={p.id ?? p.code ?? idx} style={{ borderBottom: `1px solid ${tokens.border}` }}>
                 <td style={{ ...td, fontWeight: 700 }} className="hide-mobile">{p.code}</td>
                 <td style={td}>{p.name}</td>
                 <td style={td} className="hide-mobile">
@@ -311,7 +385,7 @@ function ProductTable({ products, onEdit, onDelete }) {
           <PageButton disabled={page === 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
             «
           </PageButton>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+          {getVisiblePages().map((n) => (
             <PageButton key={n} active={n === page} onClick={() => setPage(n)}>
               {n}
             </PageButton>
@@ -357,12 +431,32 @@ function PageButton({ children, active, disabled, onClick }) {
 /* ------------------------------------------------------------------ */
 
 export default function ProductManagementPage() {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All");
   const [editingProduct, setEditingProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [nextId, setNextId] = useState(initialProducts.length + 1);
+
+  const loadProducts = async () => {
+    setLoading(true);
+    try {
+      const data = await getProducts();
+      if (Array.isArray(data)) {
+        setProducts(data.map(normalizeProduct));
+      } else {
+        setProducts([]);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
@@ -372,27 +466,45 @@ export default function ProductManagementPage() {
     });
   }, [products, search, typeFilter]);
 
-  const handleSave = (form) => {
-    if (editingProduct) {
-      setProducts((ps) => ps.map((p) => (p.id === editingProduct.id ? { ...p, ...form } : p)));
-      setEditingProduct(null);
-    } else {
-      setProducts((ps) => [...ps, { id: nextId, ...form }]);
-      setNextId((n) => n + 1);
+  const handleSave = async (form) => {
+    const payload = {
+      productCode: form.code,
+      productName: form.name,
+      productType: toBackendProductType(form.type),
+      inventoryCategory: form.inventoryCategory ?? "PHYSICAL",
+      basePrice: Number(form.price)
+    };
+    try {
+      if (editingProduct) {
+        const id = editingProduct.id;
+        await updateProduct(id, payload);
+      } else {
+        await createProduct(payload);
+      }
+      loadProducts();
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const handleDelete = (id) => {
-    setProducts((ps) => ps.filter((p) => p.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id);
+      loadProducts();
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div
       style={{
-        background: tokens.bgPage,
-        minHeight: "100vh",
-        padding: 28,
         fontFamily: "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        width: "100%"
       }}
     >
       <style>{`
@@ -403,7 +515,7 @@ export default function ProductManagementPage() {
       `}</style>
 
       {/* Page Title Header */}
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom: 12 }}>
         <h1 style={{ margin: 0, fontSize: 28, fontWeight: 800, color: tokens.textPrimary, letterSpacing: "-0.02em" }}>
           Products
         </h1>
@@ -444,6 +556,28 @@ export default function ProductManagementPage() {
           setIsModalOpen(false);
         }}
       />
+    </div>
+  );
+}
+
+function LoadingSpinner() {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 0", gap: 12 }}>
+      <div style={{
+        width: 36,
+        height: 36,
+        border: "3px solid #e2e8f0",
+        borderTop: "3px solid #64748b",
+        borderRadius: "50%",
+        animation: "spin 0.8s linear infinite"
+      }} />
+      <span style={{ fontSize: 14, color: "#64748b", fontWeight: 500 }}>Loading content...</span>
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

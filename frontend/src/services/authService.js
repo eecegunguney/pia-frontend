@@ -1,17 +1,20 @@
 import api from "./api";
+import API_ENDPOINTS from "../config/apiEndpoints";
 
 export const login = async (username, password) => {
-  const response = await api.get("/APP_USER");
+  const response = await api.post(API_ENDPOINTS.AUTH_LOGIN, {
+    username,
+    password,
+  });
 
-  const user = response.data.find(
-    (user) =>
-      user.username === username &&
-      user.password === password
-  );
+  const data = response.data;
 
-  if (!user) {
-    throw new Error("Invalid username or password.");
+  // Store JWT token if returned by backend
+  if (data.token) {
+    localStorage.setItem("token", data.token);
   }
 
+  // Return user details
+  const user = data.user || data;
   return user;
 };

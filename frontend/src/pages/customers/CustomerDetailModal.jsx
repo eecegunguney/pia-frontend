@@ -20,15 +20,20 @@ function CustomerDetailModal({ isOpen, customer, onClose }) {
       const inventories = await getCustomerInventory();
       const products = await getProducts();
 
-      const customerInventories = inventories.filter(
-        (item) => item.customer_id === customer.customer_id
-      );
+      const customerId = customer.customerId ?? customer.customer_id ?? customer.id;
 
-      const customerProducts = products.filter((product) =>
-        customerInventories.some(
-          (inventory) => inventory.product_code === product.product_code
-        )
-      );
+      const customerInventories = inventories.filter((item) => {
+        const itemCustomerId = item.customerId ?? item.customer_id;
+        return Number(itemCustomerId) === Number(customerId);
+      });
+
+      const customerProducts = products.filter((product) => {
+        const productCode = product.productCode ?? product.product_code;
+        return customerInventories.some((inventory) => {
+          const invProductCode = inventory.productCode ?? inventory.product_code;
+          return invProductCode === productCode;
+        });
+      });
 
       setProducts(customerProducts);
     } catch (err) {
@@ -52,7 +57,7 @@ function CustomerDetailModal({ isOpen, customer, onClose }) {
 
         <div>
           <h2>
-            {customer.first_name} {customer.last_name}
+            {customer.firstName ?? customer.first_name} {customer.lastName ?? customer.last_name}
           </h2>
 
           <p className="detail-subtitle">
@@ -79,15 +84,21 @@ function CustomerDetailModal({ isOpen, customer, onClose }) {
                 </td>
               </tr>
             ) : (
-              products.map((product) => (
-                <tr key={product.id || product.product_code}>
-                  <td data-label="Product Code">{product.product_code}</td>
-                  <td data-label="Product Name">{product.product_name}</td>
-                  <td data-label="Price" className="price-cell">
-                    ₺{Number(product.base_price).toLocaleString()}
-                  </td>
-                </tr>
-              ))
+              products.map((product, idx) => {
+                const productCode = product.productCode ?? product.product_code;
+                const productName = product.productName ?? product.product_name;
+                const basePrice = product.basePrice ?? product.base_price;
+
+                return (
+                  <tr key={product.id || productCode || idx}>
+                    <td data-label="Product Code">{productCode}</td>
+                    <td data-label="Product Name">{productName}</td>
+                    <td data-label="Price" className="price-cell">
+                      ₺{Number(basePrice).toLocaleString()}
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>

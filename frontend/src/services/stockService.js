@@ -70,6 +70,6 @@ export const deleteStock = async (id) => {
  * @returns {Promise<Array>} Sales channels list.
  */
 export const getSalesChannels = async () => {
-  const response = await api.get("/SALES_CHANNEL");
+  const response = await api.get(API_ENDPOINTS.SALES_CHANNELS);
   return response.data;
 };

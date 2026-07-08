@@ -31,19 +31,19 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   useEffect(() => {
     if (isOpen && customer) {
       setFormData({
-        first_name: customer.first_name || "",
-        last_name: customer.last_name || "",
-        email: customer.email || "",
-        phone_number: customer.phone_number || "",
-        gender: customer.gender || "",
-        birth_date: customer.birth_date || "",
-        city: customer.city || "",
-        district: customer.district || "",
-        customer_type: customer.customer_type || "",
-        segment: customer.segment || "",
-        is_active: customer.is_active ?? true,
-        registration_date: customer.registration_date || "",
-        company_name: customer.company_name || ""
+        first_name: customer.firstName ?? customer.first_name ?? "",
+        last_name: customer.lastName ?? customer.last_name ?? "",
+        email: customer.email ?? "",
+        phone_number: customer.phoneNumber ?? customer.phone_number ?? "",
+        gender: customer.gender ?? "",
+        birth_date: customer.birth_date ?? "", // or birthDate if backend returned it
+        city: customer.city ?? "",
+        district: customer.district ?? "",
+        customer_type: customer.customerType ?? customer.customer_type ?? "",
+        segment: customer.segment ?? "",
+        is_active: customer.isActive ?? customer.is_active ?? true,
+        registration_date: customer.registrationDate ?? customer.registration_date ?? "",
+        company_name: customer.companyName ?? customer.company_name ?? ""
       });
       setErrors({});
     }
@@ -52,14 +52,14 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
   useEffect(() => {
     if (isOpen && customers && customers.length > 0) {
       const uniqueCities = [...new Set(customers.map(c => c.city).filter(Boolean))];
-      const uniqueTypes = [...new Set(customers.map(c => c.customer_type).filter(Boolean))];
+      const uniqueTypes = [...new Set(customers.map(c => c.customerType ?? c.customer_type).filter(Boolean))];
       const uniqueSegments = [...new Set(customers.map(c => c.segment).filter(Boolean))];
       const uniqueCompanies = [
-        ...new Set(customers.map((c) => c.company_name).filter(Boolean)),
+        ...new Set(customers.map((c) => c.companyName ?? c.company_name).filter(Boolean)),
       ];
 
       setCities(uniqueCities);
-      setCustomerTypes(uniqueTypes);
+      setCustomerTypes(uniqueTypes.length > 0 ? uniqueTypes : ["Retail", "Corporate"]);
       setSegments(uniqueSegments);
       setCompanies(uniqueCompanies);
     }
@@ -146,8 +146,8 @@ function CustomerEditModal({ isOpen, customer, customers, onClose, onUpdate }) {
     try {
       const payload = {
         ...formData,
-        customer_id: customer.customer_id,
-        id: customer.id
+        customer_id: customer.customerId ?? customer.customer_id ?? customer.id,
+        id: customer.customerId ?? customer.customer_id ?? customer.id
       };
 
       const updated = await editCustomer(payload);
