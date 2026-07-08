@@ -19,6 +19,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
     segment: "",
     is_active: "true",
     registration_date: "",
+    company_name: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -27,6 +28,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
   const [districts, setDistricts] = useState([]);
   const [customerTypes, setCustomerTypes] = useState([]);
   const [segments, setSegments] = useState([]);
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
     if (isOpen) {
@@ -50,6 +52,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
         segment: "",
         is_active: true,
         registration_date: formattedDate,
+        company_name: "",
       });
 
       setErrors({});
@@ -67,10 +70,14 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
       const uniqueSegments = [
         ...new Set(customers.map((c) => c.segment).filter(Boolean)),
       ];
+       const uniqueCompanies = [
+        ...new Set(customers.map((c) => c.company_name).filter(Boolean)),
+      ];
 
       setCities(uniqueCities);
       setCustomerTypes(uniqueTypes);
       setSegments(uniqueSegments);
+      setCompanies(uniqueCompanies);
     }
   }, [isOpen, customers]);
 
@@ -115,8 +122,18 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
     }
   };
 
-  const handleChange = (e) => {
+   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === "customer_type") {
+      setFormData((prev) => ({
+        ...prev,
+        customer_type: value,
+        company_name: value === "Retail" ? "" : prev.company_name,
+      }));
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -160,7 +177,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay">
       <div className="customer-modal" onClick={(e) => e.stopPropagation()}>
         <button type="button" className="modal-close-btn" onClick={onClose}>
           <IoMdClose size={18} />
@@ -241,6 +258,7 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
                 placeholder="+905XXXXXXXXX"
                 value={formData.phone_number}
                 onChange={handleChange}
+                maxLength={11}
                 style={errors.phone_number ? { borderColor: "red" } : {}}
               />
               {errors.phone_number && (
@@ -368,6 +386,24 @@ function CustomerFormModal({ isOpen, onClose, onRefresh, customers }) {
                   {errors.customer_type}
                 </span>
               )}
+            </div>
+             <div>
+              <label>Company Name</label>
+
+              <select
+                name="company_name"
+                value={formData.company_name}
+                onChange={handleChange}
+                disabled={formData.customer_type !== "Corporate"}
+              >
+                <option value="">Select Company</option>
+
+                {companies.map((company, index) => (
+                  <option key={index} value={company}>
+                    {company}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Otomatik Atanan Kayıt Tarihi (Registration Date) */}

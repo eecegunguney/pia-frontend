@@ -123,6 +123,7 @@ function CustomerListPage() {
             <th>City</th>
             <th>District</th>
             <th>Registration Date</th>
+            <th>Company Name</th>
             <th style={{ textAlign: "center" }}>Actions</th>
           </tr>
         </thead>
@@ -136,6 +137,7 @@ function CustomerListPage() {
               <td>{customer.city}</td>
               <td>{customer.district}</td>
               <td>{customer.registration_date}</td>
+              <td>{customer.company_name || "-"}</td>
 
               <td className="actions-cell">
                 <button
