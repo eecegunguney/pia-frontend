@@ -5,13 +5,15 @@ import {
   Cell,
   LineChart,
   Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { MapPin, RefreshCw, Warehouse, BarChart3 } from "lucide-react";
+import { MapPin, RefreshCw, Warehouse, BarChart3, TrendingUp, Package, DollarSign, Activity } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /*  Design tokens — identical to the Dashboard / Product pages         */
@@ -97,6 +99,77 @@ const cityData = {
       { season: "Autumn", product: "Base Antenna", units: 740 },
       { season: "Winter", product: "Power Adapter", units: 560 },
     ],
+    revenue_by_year: [
+      { year: "2021", revenue: 3.2 },
+      { year: "2022", revenue: 4.8 },
+      { year: "2023", revenue: 6.5 },
+      { year: "2024", revenue: 8.2 },
+      { year: "2025", revenue: 9.1 },
+    ],
+    metrics: {
+      productsSold: 15480,
+      currentStock: 3640,
+      stockValue: 760000,
+      revenue: 760750,
+    },
+  },
+};
+
+const revenueByYearData = {
+  Istanbul: [
+    { year: "2021", revenue: 4.5 },
+    { year: "2022", revenue: 6.2 },
+    { year: "2023", revenue: 8.1 },
+    { year: "2024", revenue: 10.3 },
+    { year: "2025", revenue: 12.1 },
+  ],
+  Ankara: [
+    { year: "2021", revenue: 2.1 },
+    { year: "2022", revenue: 3.4 },
+    { year: "2023", revenue: 4.8 },
+    { year: "2024", revenue: 5.9 },
+    { year: "2025", revenue: 6.7 },
+  ],
+  Izmir: [
+    { year: "2021", revenue: 1.8 },
+    { year: "2022", revenue: 2.7 },
+    { year: "2023", revenue: 3.5 },
+    { year: "2024", revenue: 4.2 },
+    { year: "2025", revenue: 5.1 },
+  ],
+  Antalya: [
+    { year: "2021", revenue: 3.2 },
+    { year: "2022", revenue: 4.8 },
+    { year: "2023", revenue: 6.5 },
+    { year: "2024", revenue: 8.2 },
+    { year: "2025", revenue: 9.1 },
+  ],
+};
+
+const cityMetrics = {
+  Istanbul: {
+    productsSold: 28480,
+    currentStock: 18480,
+    stockValue: 3155000,
+    revenue: 2839000,
+  },
+  Ankara: {
+    productsSold: 3930,
+    currentStock: 3930,
+    stockValue: 948000,
+    revenue: 1573000,
+  },
+  Izmir: {
+    productsSold: 14680,
+    currentStock: 14680,
+    stockValue: 255300,
+    revenue: 252400,
+  },
+  Antalya: {
+    productsSold: 3640,
+    currentStock: 3640,
+    stockValue: 760000,
+    revenue: 760750,
   },
 };
 
@@ -136,7 +209,7 @@ function Card({ children, style }) {
         border: `1px solid ${tokens.border}`,
         borderRadius: 16,
         boxShadow: tokens.cardShadow,
-        padding: 16,
+        padding: 12,
         display: "flex",
         flexDirection: "column",
         ...style,
@@ -154,16 +227,16 @@ function CardTitle({ children, sub, action }) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",
-        marginBottom: 12,
+        marginBottom: 8,
         gap: 12,
       }}
     >
       <div>
-        <h2 style={{ fontSize: 20, fontWeight: 800, color: tokens.textPrimary, margin: 0 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 800, color: tokens.textPrimary, margin: 0, lineHeight: 1.2 }}>
           {children}
         </h2>
         {sub && (
-          <div style={{ fontSize: 13, color: tokens.textSecondary, marginTop: 5, fontWeight: 500 }}>
+          <div style={{ fontSize: 12, color: tokens.textSecondary, marginTop: 3, fontWeight: 500 }}>
             {sub}
           </div>
         )}
@@ -174,56 +247,56 @@ function CardTitle({ children, sub, action }) {
 }
 
 function CircularProgressRing({ value, color }) {
-  const radius = 14;
+  const radius = 10;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference * (1 - value / 100);
 
   return (
-    <svg width={38} height={38} viewBox="0 0 38 38">
+    <svg width={28} height={28} viewBox="0 0 28 28">
       <circle
-        cx="19"
-        cy="19"
+        cx="14"
+        cy="14"
         r={radius}
         fill="none"
         stroke="rgba(16, 24, 64, 0.08)"
-        strokeWidth="4"
+        strokeWidth="3"
       />
       <circle
-        cx="19"
-        cy="19"
+        cx="14"
+        cy="14"
         r={radius}
         fill="none"
         stroke={color}
-        strokeWidth="4"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeDasharray={circumference}
         strokeDashoffset={strokeDashoffset}
-        transform="rotate(-90 19 19)"
+        transform="rotate(-90 14 14)"
       />
-      <text x="19" y="22" textAnchor="middle" fontSize={9.5} fontWeight={800} fill={color}>
+      <text x="14" y="16" textAnchor="middle" fontSize={7} fontWeight={800} fill={color}>
         {value}%
       </text>
     </svg>
   );
 }
 
-function KpiSummaryCard({ title, value, subtext, icon: Icon, accent, accentBg, ringValue, style }) {
+function KpiSummaryCard({ title, value, icon: Icon, accent, accentBg, ringValue, style }) {
   return (
     <Card
       style={{
-        padding: "8px 12px",
+        padding: "20px 12px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        gap: 8,
+        gap: 10,
         ...style,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flex: 1, minWidth: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
         <div
           style={{
-            width: 28,
-            height: 28,
+            width: 32,
+            height: 32,
             borderRadius: 9,
             background: accentBg,
             display: "flex",
@@ -232,17 +305,14 @@ function KpiSummaryCard({ title, value, subtext, icon: Icon, accent, accentBg, r
             flexShrink: 0,
           }}
         >
-          <Icon size={14} color={accent} />
+          <Icon size={16} color={accent} />
         </div>
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: 11, color: tokens.textSecondary, fontWeight: 600, marginBottom: 1, whiteSpace: "nowrap" }}>{title}</div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: tokens.textPrimary, whiteSpace: "nowrap", lineHeight: 1.15 }}>{value}</div>
-          <div style={{ fontSize: 10.5, color: tokens.textSecondary, fontWeight: 500, marginTop: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {subtext}
-          </div>
+          <div style={{ fontSize: 16, color: tokens.textSecondary, fontWeight: 800, whiteSpace: "nowrap" }}>{title}</div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: tokens.textPrimary, whiteSpace: "nowrap", lineHeight: 1.1 }}>{value}</div>
         </div>
       </div>
-      <CircularProgressRing value={ringValue} color={accent} />
+      
     </Card>
   );
 }
@@ -451,20 +521,20 @@ function TurkeyMapCard({ selectedCity, onSelect, style }) {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 10,
-          marginTop: 12,
+          gap: 8,
+          marginTop: 8,
           background: tokens.bgCardSoft,
           border: `1px solid ${tokens.border}`,
           borderRadius: 14,
-          padding: "10px 14px",
+          padding: "8px 11px",
           width: "fit-content",
           flexShrink: 0,
         }}
       >
         <div
           style={{
-            width: 28,
-            height: 28,
+            width: 26,
+            height: 26,
             borderRadius: "50%",
             background: tokens.accentRed,
             display: "flex",
@@ -473,11 +543,11 @@ function TurkeyMapCard({ selectedCity, onSelect, style }) {
             flexShrink: 0,
           }}
         >
-          <MapPin size={14} color="#fff" />
+          <MapPin size={13} color="#fff" />
         </div>
         <div>
-          <div style={{ fontSize: 11, color: tokens.textSecondary, fontWeight: 600 }}>Selected city</div>
-          <div style={{ fontSize: 14, color: tokens.textPrimary, fontWeight: 800 }}>{selectedCity}</div>
+          <div style={{ fontSize: 10, color: tokens.textSecondary, fontWeight: 600 }}>Selected city</div>
+          <div style={{ fontSize: 13, color: tokens.textPrimary, fontWeight: 800, lineHeight: 1.1 }}>{selectedCity}</div>
         </div>
       </div>
     </Card>
@@ -492,9 +562,9 @@ function BestSellersCard({ selectedCity, style, onRefresh }) {
   const rows = cityData[selectedCity].bestSellers;
   const totals = totalsFor(selectedCity);
 
-  const th = { textAlign: "left", color: tokens.textSecondary, fontSize: 13, fontWeight: 600, padding: "0 0 8px 0" };
+  const th = { textAlign: "left", color: tokens.textSecondary, fontSize: 11, fontWeight: 600, padding: "0 0 6px 0" };
   const thRight = { ...th, textAlign: "right" };
-  const td = { color: tokens.textPrimary, fontSize: 15, fontWeight: 600, padding: "9px 0" };
+  const td = { color: tokens.textPrimary, fontSize: 13, fontWeight: 600, padding: "6px 0" };
   const tdRight = { ...td, textAlign: "right", fontWeight: 700 };
 
   return (
@@ -506,8 +576,8 @@ function BestSellersCard({ selectedCity, style, onRefresh }) {
             onClick={onRefresh}
             title="Refresh"
             style={{
-              width: 30,
-              height: 30,
+              width: 28,
+              height: 28,
               borderRadius: 9,
               border: `1px solid ${tokens.border}`,
               background: tokens.bgCardSoft,
@@ -519,14 +589,14 @@ function BestSellersCard({ selectedCity, style, onRefresh }) {
               flexShrink: 0,
             }}
           >
-            <RefreshCw size={14} />
+            <RefreshCw size={12} />
           </button>
         }
       >
         Top 3 Best Selling Products
       </CardTitle>
 
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto", flex: 1, minHeight: 0 }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${tokens.border}` }}>
@@ -565,7 +635,7 @@ function renderDonutLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent 
   const x = cx + r * Math.cos(-midAngle * RAD);
   const y = cy + r * Math.sin(-midAngle * RAD);
   return (
-    <text x={x} y={y} fill="#ffffff" textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={800}>
+    <text x={x} y={y} fill="#ffffff" textAnchor="middle" dominantBaseline="central" fontSize={14} fontWeight={800}>
       {(percent * 100).toFixed(0)}%
     </text>
   );
@@ -573,6 +643,7 @@ function renderDonutLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent 
 
 function SalesChannelCard({ selectedCity, style }) {
   const { online, retail, onlineValue, retailValue } = cityData[selectedCity].channels;
+  const metrics = cityMetrics[selectedCity];
   const pieData = [
     { name: "Online Sales", value: online, amount: onlineValue, color: tokens.primary },
     { name: "Retail Sales", value: retail, amount: retailValue, color: tokens.accentGreen },
@@ -580,57 +651,110 @@ function SalesChannelCard({ selectedCity, style }) {
 
   return (
     <Card style={{ flex: 1, minHeight: 0, ...style }}>
-      <CardTitle sub={selectedCity}>Sales Channel Comparison</CardTitle>
-      <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", flex: 1, minHeight: 0 }}>
-        <div style={{ width: 128, height: 128, flexShrink: 0 }}>
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                innerRadius={38}
-                outerRadius={58}
-                paddingAngle={2}
-                stroke="none"
-                label={renderDonutLabel}
-                labelLine={false}
-              >
-                {pieData.map((entry) => (
-                  <Cell key={entry.name} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  background: tokens.bgCardSoft,
-                  border: `1px solid ${tokens.border}`,
-                  borderRadius: 10,
-                  color: tokens.textPrimary,
-                }}
-                formatter={(v, n) => [`${v}%`, n]}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+  <CardTitle sub={selectedCity}>Sales Channel Comparison</CardTitle>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {pieData.map((entry) => (
-            <div key={entry.name}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <div style={{ width: 11, height: 11, borderRadius: "50%", background: entry.color }} />
-                <span style={{ fontSize: 14, color: tokens.textSecondary, fontWeight: 600 }}>{entry.name}</span>
-              </div>
-              <div style={{ fontSize: 24, fontWeight: 800, color: tokens.textPrimary, lineHeight: 1 }}>
-                {entry.value}%
-              </div>
-              <div style={{ fontSize: 14, color: tokens.textSecondary, marginTop: 4, fontWeight: 500 }}>
-                {formatMoney(entry.amount)}
-              </div>
-            </div>
-          ))}
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 30,
+      flex: 1,
+    }}
+  >
+    <div style={{ width: 180, height: 180 }}>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={pieData}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={48}
+            outerRadius={72}
+            paddingAngle={2}
+            stroke="none"
+            label={renderDonutLabel}
+            labelLine={false}
+          >
+            {pieData.map((entry) => (
+              <Cell key={entry.name} fill={entry.color} />
+            ))}
+          </Pie>
+
+          <Tooltip
+            contentStyle={{
+              background: tokens.bgCardSoft,
+              border: `1px solid ${tokens.border}`,
+              borderRadius: 10,
+              color: tokens.textPrimary,
+            }}
+            formatter={(v, n) => [`${v}%`, n]}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 16,
+        justifyContent: "center",
+      }}
+    >
+      {pieData.map((entry) => (
+        <div key={entry.name}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              marginBottom: 2,
+            }}
+          >
+            <div
+              style={{
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                background: entry.color,
+              }}
+            />
+            <span
+              style={{
+                fontSize: 12,
+                color: tokens.textSecondary,
+                fontWeight: 600,
+              }}
+            >
+              {entry.name}
+            </span>
+          </div>
+
+          <div
+            style={{
+              fontSize: 22,
+              fontWeight: 800,
+              color: tokens.textPrimary,
+            }}
+          >
+            {entry.value}%
+          </div>
+
+          <div
+            style={{
+              fontSize: 12,
+              color: tokens.textSecondary,
+              fontWeight: 600,
+            }}
+          >
+            {formatMoney(entry.amount)}
+          </div>
         </div>
-      </div>
-    </Card>
+      ))}
+    </div>
+  </div>
+</Card>
   );
 }
 
@@ -642,14 +766,99 @@ function SeasonalDot(props) {
   const { cx, cy, payload } = props;
   return (
     <g>
-      <circle cx={cx} cy={cy} r={5} fill={tokens.primary} stroke={tokens.bgCard} strokeWidth={2} />
-      <text x={cx} y={cy - 30} textAnchor="middle" fontSize={12} fontWeight={600} fill={tokens.textSecondary}>
+      <circle cx={cx} cy={cy} r={4} fill={tokens.primary} stroke={tokens.bgCard} strokeWidth={2} />
+      <text x={cx} y={cy - 24} textAnchor="middle" fontSize={10} fontWeight={600} fill={tokens.textSecondary}>
         {payload.product}
       </text>
-      <text x={cx} y={cy - 14} textAnchor="middle" fontSize={13.5} fontWeight={800} fill={tokens.textPrimary}>
+      <text x={cx} y={cy - 11} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={tokens.textPrimary}>
         {payload.units.toLocaleString()}
       </text>
     </g>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  5. Mini info cards for Sales Channel section                       */
+/* ------------------------------------------------------------------ */
+
+function MiniInfoCard({ label, value, icon: Icon, accent, accentBg }) {
+  return (
+    <div
+      style={{
+        background: tokens.bgCard,
+        border: `1px solid ${tokens.border}`,
+        borderRadius: 12,
+        padding: "8px 10px",
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+      }}
+    >
+      <div
+        style={{
+          width: 24,
+          height: 24,
+          borderRadius: 7,
+          background: accentBg,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
+        <Icon size={12} color={accent} />
+      </div>
+      <div>
+        <div style={{ fontSize: 10, color: tokens.textSecondary, fontWeight: 600 }}>{label}</div>
+        <div style={{ fontSize: 13, fontWeight: 800, color: tokens.textPrimary, lineHeight: 1.1 }}>{value}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  6. Revenue By Year Chart                                           */
+/* ------------------------------------------------------------------ */
+
+function RevenueByYearCard({ selectedCity, style }) {
+  const data = revenueByYearData[selectedCity];
+
+  return (
+    <Card style={{ flex: 1, minHeight: 0, ...style }}>
+      <CardTitle sub="Annual branch revenue (Million ₺)">Revenue By Year</CardTitle>
+      <div style={{ width: "100%", flex: 1, minHeight: 0 }}>
+        <ResponsiveContainer>
+          <BarChart data={data} margin={{ top: 8, right: 16, left: -10, bottom: 0 }}>
+            <CartesianGrid stroke={tokens.track} strokeDasharray="3 4" vertical={false} />
+            <XAxis
+              dataKey="year"
+              stroke={tokens.textSecondary}
+              tick={{ fill: tokens.textSecondary, fontSize: 11 }}
+              axisLine={{ stroke: tokens.border }}
+              tickLine={false}
+            />
+            <YAxis
+              stroke={tokens.textSecondary}
+              tick={{ fill: tokens.textSecondary, fontSize: 11 }}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(v) => `${v}M`}
+            />
+            <Tooltip
+              contentStyle={{
+                background: tokens.bgCardSoft,
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 10,
+                color: tokens.textPrimary,
+              }}
+              formatter={(v) => [`${v}M ₺`, "Revenue"]}
+              labelFormatter={(label) => `Year: ${label}`}
+            />
+            <Bar dataKey="revenue" fill={tokens.primary} radius={[6, 6, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
   );
 }
 
@@ -658,23 +867,23 @@ function SeasonalSalesCard({ selectedCity, style }) {
   return (
     <Card style={{ flex: 1, minHeight: 0, ...style }}>
       <CardTitle sub={selectedCity}>Most Sold Product by Season</CardTitle>
-      <div style={{ fontSize: 13, color: tokens.textSecondary, fontWeight: 600, marginBottom: 2 }}>
+      <div style={{ fontSize: 12, color: tokens.textSecondary, fontWeight: 600, marginBottom: 1 }}>
         Units sold
       </div>
       <div style={{ width: "100%", flex: 1, minHeight: 0 }}>
         <ResponsiveContainer>
-          <LineChart data={data} margin={{ top: 32, right: 20, left: -10, bottom: 0 }}>
+          <LineChart data={data} margin={{ top: 28, right: 16, left: -10, bottom: 0 }}>
             <CartesianGrid stroke={tokens.track} strokeDasharray="3 4" vertical={false} />
             <XAxis
               dataKey="season"
               stroke={tokens.textSecondary}
-              tick={{ fill: tokens.textSecondary, fontSize: 13 }}
+              tick={{ fill: tokens.textSecondary, fontSize: 11 }}
               axisLine={{ stroke: tokens.border }}
               tickLine={false}
             />
             <YAxis
               stroke={tokens.textSecondary}
-              tick={{ fill: tokens.textSecondary, fontSize: 12 }}
+              tick={{ fill: tokens.textSecondary, fontSize: 11 }}
               axisLine={false}
               tickLine={false}
               tickFormatter={(v) => (v >= 1000 ? `${v / 1000}K` : v)}
@@ -692,9 +901,9 @@ function SeasonalSalesCard({ selectedCity, style }) {
               type="monotone"
               dataKey="units"
               stroke={tokens.primary}
-              strokeWidth={3}
+              strokeWidth={2.5}
               dot={<SeasonalDot />}
-              activeDot={{ r: 6 }}
+              activeDot={{ r: 5 }}
               name="Units sold"
             />
           </LineChart>
@@ -704,13 +913,6 @@ function SeasonalSalesCard({ selectedCity, style }) {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Page                                                                */
-/*  Layout only (grid/flex) — no component was redesigned:             */
-/*    Row 1: KPI cards (left, 2-up)      | Top 3 Products (right)      */
-/*    Row 2: Turkey Map (left, tallest)  | Seasonal chart (right,      */
-/*    Row 3: Online vs Retail (left)     |   spans rows 2 + 3)         */
-/* ------------------------------------------------------------------ */
 
 export default function CityDashboardPage() {
   const [selectedCity, setSelectedCity] = useState("Istanbul");
@@ -725,7 +927,7 @@ export default function CityDashboardPage() {
       style={{
         background: tokens.bgPage,
         height: "100vh",
-        padding: 16,
+        padding: 8,
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
@@ -733,85 +935,153 @@ export default function CityDashboardPage() {
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
-        * { box-sizing: border-box; }
-        table { font-family: inherit; }
-        .city-dashboard-grid {
-          flex: 1;
-          min-height: 0;
-          display: grid;
-          grid-template-columns: 1.7fr 1fr;
-          grid-template-rows: auto 3fr 1.3fr;
-          grid-template-areas:
-            "kpi      products"
-            "map      seasonal"
-            "channel  seasonal";
-          gap: 16px;
-        }
-        .kpi-row {
-          grid-area: kpi;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-        }
-        @media (max-width: 900px) {
-          html, body { height: auto; }
-          .city-dashboard-grid {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto auto auto;
-            grid-template-areas:
-              "kpi"
-              "map"
-              "channel"
-              "products"
-              "seasonal";
-          }
-        }
-      `}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
 
-      <div className="city-dashboard-grid">
-        <div className="kpi-row">
-          <KpiSummaryCard
-            title="Total Stock"
-            value={totals.stock.toLocaleString()}
-            subtext="Warehouse inventory available"
-            icon={Warehouse}
-            accent={tokens.primary}
-            accentBg="rgba(51, 85, 244, 0.12)"
-            ringValue={stockUtilization}
-          />
-          <KpiSummaryCard
-            title="Total Sales"
-            value={formatMoney(totalSales)}
-            subtext={`Sales target achievement for ${selectedCity}`}
-            icon={BarChart3}
-            accent={tokens.accentGreen}
-            accentBg="rgba(38, 160, 91, 0.12)"
-            ringValue={salesTarget}
-          />
-        </div>
+  * { box-sizing: border-box; }
+  table { font-family: inherit; }
 
-        <div style={{ gridArea: "map", minHeight: 0, display: "flex" }}>
-          <TurkeyMapCard selectedCity={selectedCity} onSelect={setSelectedCity} style={{ flex: 1 }} />
-        </div>
+  .dashboard-layout{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
 
-        <div style={{ gridArea: "channel", minHeight: 0, display: "flex" }}>
-          <SalesChannelCard selectedCity={selectedCity} style={{ flex: 1 }} />
-        </div>
+.dashboard-layout{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+}
 
-        <div style={{ gridArea: "products", minHeight: 0, display: "flex" }}>
-          <BestSellersCard
-            key={refreshKey}
-            selectedCity={selectedCity}
-            onRefresh={() => setRefreshKey((k) => k + 1)}
-            style={{ flex: 1 }}
-          />
-        </div>
+  @media (max-width:900px){
 
-        <div style={{ gridArea: "seasonal", minHeight: 0, display: "flex" }}>
-          <SeasonalSalesCard selectedCity={selectedCity} style={{ flex: 1 }} />
-        </div>
+    .dashboard-layout{
+      overflow-y:auto;
+    }
+
+    .top-row,
+    .middle-row,
+    .bottom-row{
+      grid-template-columns:1fr;
+      height:auto;
+    }
+
+    .middle-row>*,
+    .bottom-row>*{
+      min-height:280px;
+    }
+
+  }
+`}</style>
+
+<div className="dashboard-layout">
+
+  {/* ---------- TOP AREA ---------- */}
+  <div
+    style={{
+      display: "flex",
+      gap: 10,
+      flex: 1,
+      minHeight: 0,
+    }}
+  >
+    {/* LEFT COLUMN */}
+    <div
+      style={{
+        flex: 1.65,
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 10,
+          height: 140,
+        }}
+      >
+        <KpiSummaryCard
+          title="Total Stock"
+          value={totals.stock.toLocaleString()}
+          icon={Warehouse}
+          accent={tokens.primary}
+          accentBg="rgba(51, 85, 244, 0.12)"
+          ringValue={stockUtilization}
+        />
+
+        <KpiSummaryCard
+          title="Total Sales"
+          value={formatMoney(totalSales)}
+          icon={BarChart3}
+          accent={tokens.accentGreen}
+          accentBg="rgba(38, 160, 91, 0.12)"
+          ringValue={salesTarget}
+        />
+      </div>
+
+      <div style={{ flex: 1 }}>
+        <TurkeyMapCard
+          selectedCity={selectedCity}
+          onSelect={setSelectedCity}
+          style={{ height: "100%" }}
+        />
       </div>
     </div>
+
+    {/* RIGHT COLUMN */}
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
+      }}
+    >
+      <div style={{ height: 190 }}>
+        <BestSellersCard
+          key={refreshKey}
+          selectedCity={selectedCity}
+          onRefresh={() => setRefreshKey((k) => k + 1)}
+          style={{ height: "100%" }}
+        />
+      </div>
+
+      <div style={{ flex: 1 }}>
+        <SeasonalSalesCard
+          selectedCity={selectedCity}
+          style={{ height: "100%" }}
+        />
+      </div>
+    </div>
+  </div>
+
+  {/* ---------- BOTTOM ROW ---------- */}
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "0.9fr 1.4fr",
+      gap: 10,
+      height: 230,
+      marginTop: 10,
+    }}
+  >
+    <SalesChannelCard
+      selectedCity={selectedCity}
+      style={{ height: "100%" }}
+    />
+
+    <RevenueByYearCard
+      selectedCity={selectedCity}
+      style={{ height: "100%" }}
+    />
+  </div>
+
+</div>
+      </div>
+    
   );
 }
